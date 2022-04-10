@@ -2,25 +2,39 @@ extends Node
 
 
 # Карта
-const passage_width_pix = 64
-
-
-# Враги
-const enemy_radius_pix = 32
-const enemy_bos_radius_pix = 50
-const enemy_detection_radius_pix = 320
+const road_size_px = 64
+const background_color = Color.gray
 
 
 # Комнаты 
-const room_number = 10
-var room_height_pix = 256
-var room_width_pix = 448
-#TODO настароить автоматическую генерацию локаций по заданным параметрам и описать эти параметры)
+const room_number = 12
+const room_table = Vector2(4, 3)
+const rooms_column = room_table[0]
+const rooms_line = room_table[1]
 
+const room_thickness = 22.0
+const room_color = Color.black
+const room_height_px = 256
+const room_width_px = 448
+
+const room_type = ['common', 'toilet', 'server room']
+
+
+# Враги
+const en_radius_px = 16
+const en_bos_radius_px = 32
+const en_detection_radius_px = 192
+var en_color = Color.blue
+var en_normal_speed = 30 # pix?
+var en_run_speed = 70 # pix?
+ 
 
 # Игрок
-const player_radius_pix = 32
-var speed = 50 # pix?
+const pl_radius_px = 16
+var pl_color = Color.black
+var pl_start_point = Vector2(400, 400)
+var pl_vision_radius_px = 394
+var pl_speed = 6 # pix?
 
 
 # Состояние игры
