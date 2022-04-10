@@ -6,6 +6,7 @@ func _ready():
 
 
 func _draw():
+	#for i in range(gl.room_number):
 	pass
 
 func draw_room():
