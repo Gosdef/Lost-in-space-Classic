@@ -5,6 +5,7 @@ script/source = "extends Button
 
 
 func _pressed():
+	gl.exposition_start = true
 	get_tree().change_scene(\"res://Scenes/MainLevel.tscn\")
 "
 
