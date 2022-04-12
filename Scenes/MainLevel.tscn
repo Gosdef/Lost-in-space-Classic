@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scripts/MainScene.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/MainLevel.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/White_background.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Another/TEST.tscn" type="PackedScene" id=6]
 
 [sub_resource type="TileSet" id=1]
 0/name = "White_background.png 0"
@@ -35,20 +34,6 @@
 1/shapes = [  ]
 1/z_index = 0
 
-[sub_resource type="OccluderPolygon2D" id=2]
-polygon = PoolVector2Array( 0, -64, 80, -48, 80, 0, 80, 48, 0, 64, -80, 48, -80, 0, -80, -48 )
-
-[sub_resource type="GDScript" id=3]
-script/source = "extends MeshInstance2D
-
-export (PackedScene) var wall = load(\"res://Another/TEST.tscn\")
-
-func _ready():
-	var new_wall = wall.instance()
-	add_child(new_wall)
-	$TEST.position = Vector2(100, 100)
-"
-
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -58,24 +43,10 @@ format = 1
 tile_data = PoolIntArray( 262177, 0, 0, 262178, 0, 0, 262179, 0, 0, 262180, 0, 0, 327714, 0, 0, 327715, 0, 0, 327716, 0, 0, 393249, 0, 0, 393250, 0, 0, 393251, 0, 0, 393252, 0, 0, 589857, 0, 0, 589858, 0, 0, 589859, 0, 0, 589860, 0, 0, 655393, 0, 0, 655394, 0, 0, 655395, 0, 0, 655396, 0, 0, 720929, 0, 0, 720930, 0, 0, 720931, 0, 0, 720932, 0, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 position = Vector2( 1064, 536 )
-anchor_mode = 0
 zoom = Vector2( 4, 4 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
-[node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
-visible = false
-position = Vector2( 224, 192 )
-occluder = SubResource( 2 )
-
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0, 0, 0, 1 )
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-visible = false
-script = SubResource( 3 )
-
-[node name="TEST" parent="." instance=ExtResource( 6 )]
-visible = false

@@ -2,17 +2,17 @@ extends Node
 
 
 # Карта
-const road_size_px = 64
+const road_size_px = 80
 const background_color = Color.gray
 
 
 # Комнаты 
-const room_number = 12
-const room_table = Vector2(4, 3)
+const room_table = Vector2(15, 15)
 const rooms_column = room_table[0]
 const rooms_line = room_table[1]
+const room_number = rooms_column * rooms_line
 
-const room_thickness = 22.0
+const room_thickness = 30.0
 const room_color = Color.black
 const room_height_px = 256
 const room_width_px = 448
@@ -32,7 +32,7 @@ var en_run_speed = 70 # pix?
 # Игрок
 const pl_radius_px = 16
 var pl_color = Color.black
-var pl_start_point = Vector2(400, 400)
+var pl_start_point = Vector2(2500, 2500)
 var pl_vision_radius_px = 394
 var pl_speed = 6 # pix?
 
