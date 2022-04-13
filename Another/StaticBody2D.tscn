@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/Light_mask.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends StaticBody2D
+
+func _ready():
+	pass
+"
+
+[node name="StaticBody2D" type="StaticBody2D"]
+script = SubResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -80, -80, 80, -80, 80, 80, -80, 80 )
+
+[node name="LightMask" type="Sprite" parent="."]
+scale = Vector2( 7, 7 )
+texture = ExtResource( 1 )
