@@ -4,10 +4,10 @@
 [ext_resource path="res://Sprites/light.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 32.0
+radius = 16.0
 
 [sub_resource type="OccluderPolygon2D" id=2]
-polygon = PoolVector2Array( -40, 0, -32, 32, 0, 40, 32, 32, 40, 0, 32, 0, 24, 24, 0, 32, -24, 24, -32, 0 )
+polygon = PoolVector2Array( -15.9999, 8.00012, 0.00017376, 24, 16.0001, 7.99988, 23.9999, -8.00017, 16, -0.00011584, 8.00006, 7.99994, 0.00011584, 16, -7.99994, 8.00006, -7.99994, 8.00006, -16, 0.00011584, -24.0001, -7.99983 )
 
 [node name="Player" type="KinematicBody2D"]
 rotation = 1.5708
@@ -25,6 +25,7 @@ limit_left = 0
 limit_top = 0
 
 [node name="Light2D" type="Light2D" parent="."]
+position = Vector2( -2.89599e-05, -8 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 texture_scale = 0.5

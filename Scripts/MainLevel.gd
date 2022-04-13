@@ -48,7 +48,8 @@ func draw_room(start_pos, end_pos, room_count):
 	draw_line(start_pos + Vector2(0, gl.room_height_px - th) + Vector2(0, th / 2), start_pos, gl.room_color, gl.room_thickness)
 	
 	var cnt = room_count * 4 - 4
-	for line in four_lines:
+	for i in range(len(four_lines)):
+		var line = four_lines[i]
 		var len_x = line[1][0] - line[0][0]
 		var len_y = line[1][1] - line[0][1]
 		var polygon_arr = [
@@ -58,43 +59,35 @@ func draw_room(start_pos, end_pos, room_count):
 			Vector2(-th / 2, th / 2 + len_y)
 		]
 		
-		
-		var polygon_test = [
-			Vector2(-th / 2, -th / 2), 
-			Vector2(th / 2, -th / 2), 
-			Vector2(th / 2, th / 2), 
-			Vector2(-th / 2, th / 2)
-		]
-		var th_pk = 32
-		var polygon_test_2 = [
-			Vector2(-th / th_pk, -th / th_pk), 
-			Vector2(th / th_pk + len_x, -th / th_pk), 
-			Vector2(th / th_pk + len_x, th / th_pk + len_y), 
-			Vector2(-th / th_pk, th / th_pk + len_y)
-		]
-		#TODO разобраться багом левого нижнего угла
+		#var a = th / 2
+		#var polygon_test = [
+		#	Vector2(-a, -a), 
+		#	Vector2(a + len_x, -a), 
+		#	Vector2(a + len_x, a + len_y), 
+		#	Vector2(-a, a + len_y)
+		#]
 		
 		
 		# light shape
 		var chld_light = LightOccluder2D.new()
-		draw_light_shape(chld_light, polygon_arr, line)
+		draw_light_shape(chld_light, polygon_arr, line[0])
 		
 		# wall
 		var chld_wall = StaticBody2D.new()
-		draw_wall(chld_wall, polygon_test_2, line)
+		draw_wall(chld_wall, polygon_arr, line[0])
 		
 		cnt += 1
 		#TODO сделать генерацию дверей в комнатах
 
-func draw_light_shape(chld, polygon_arr, line):
+func draw_light_shape(chld, polygon, lin0):
 	add_child(chld)
 	chld.occluder = load("res://Another/Testd.tres").duplicate(true)
-	chld.occluder.polygon = polygon_arr
-	chld.position = line[0]
+	chld.occluder.polygon = polygon
+	chld.position = lin0
 
-func draw_wall(chld, polygon_arr, line):
+func draw_wall(chld, polygon, lin0):
 	#print(polygon_arr)
 	$".".add_child(chld)
 	chld.add_child(CollisionPolygon2D.new())
-	chld.get_child(0).polygon = polygon_arr
-	chld.position = line[0]
+	chld.get_child(0).polygon = polygon
+	chld.position = lin0

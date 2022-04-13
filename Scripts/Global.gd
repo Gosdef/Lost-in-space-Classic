@@ -51,7 +51,7 @@ func _ready():
 	var rn = RandomNumberGenerator.new()
 	rn.randomize()
 	
-	room_table = Vector2(randi() % 8 + 3, randi() % 8 + 3)
+	room_table = Vector2(rn.randi_range(4, 12), rn.randi_range(4, 12))
 	#room_table = Vector2(1, 1)
 	rooms_column = room_table[0]
 	rooms_line = room_table[1]

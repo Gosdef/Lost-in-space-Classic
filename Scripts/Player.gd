@@ -19,6 +19,7 @@ func _ready():
 	$".".position = gl.pl_start_point
 	$Camera2D.limit_right = (gl.road_size_px + gl.room_width_px) * gl.rooms_column + gl.road_size_px
 	$Camera2D.limit_bottom = (gl.road_size_px + gl.room_height_px) * gl.rooms_line + gl.road_size_px
+	#TODO зависимость колизии от размера игрока)))
 
 
 func _process(delta):
@@ -42,9 +43,9 @@ func _physics_process(delta):
 		if abs($".".get_angle_to(target)) > 0.1:
 			rotation_dir = $".".get_angle_to(target) / abs($".".get_angle_to(target))
 			rotation += rotation_dir * rotation_speed * delta
-		#if abs($".".get_angle_to(target)) < 0.1:
-		get_input_click()
-		move_and_slide(velocity)
+		if abs($".".get_angle_to(target)) < 0.1:
+			get_input_click()
+			move_and_slide(velocity)
 	else:
 		get_input_keys()
 		rotation += rotation_dir * rotation_speed * delta
@@ -63,9 +64,9 @@ func get_input_keys():
 	if Input.is_action_pressed('ui_left'):
 		rotation_dir -= 1
 	if Input.is_action_pressed('ui_down'):
-		velocity = Vector2(-speed, 0).rotated(rotation)
+		velocity += Vector2(-speed / 2, 0).rotated(rotation)
 	if Input.is_action_pressed('ui_up'):
-		velocity = Vector2(speed, 0).rotated(rotation)
+		velocity += Vector2(speed, 0).rotated(rotation)
 
 
 func _draw():
