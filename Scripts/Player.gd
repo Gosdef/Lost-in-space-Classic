@@ -23,6 +23,8 @@ func _ready():
 
 
 func _process(delta):
+	speed = gl.pl_speed
+	rotation_speed = gl.pl_rotation_speed
 	move_key_cond = (
 	Input.is_action_pressed("ui_right") or
 	Input.is_action_pressed("ui_left") or
@@ -55,6 +57,8 @@ func _physics_process(delta):
 func get_input_click():
 	velocity = Vector2()
 	velocity = (target - position).normalized() * speed
+	if Input.is_action_pressed("Turbo"):
+		velocity *= 1.5
 
 func get_input_keys():
 	rotation_dir = 0
@@ -67,7 +71,10 @@ func get_input_keys():
 		velocity += Vector2(-speed / 2, 0).rotated(rotation)
 	if Input.is_action_pressed('ui_up'):
 		velocity += Vector2(speed, 0).rotated(rotation)
+	if Input.is_action_pressed("Turbo") and move_key_cond:
+		velocity += Vector2(speed / 2, 0).rotated(rotation)
 
 
 func _draw():
-	draw_circle(pl_pos, gl.pl_radius_px, gl.pl_color)
+	#draw_circle(pl_pos, gl.pl_radius_px, gl.pl_color)
+	pass

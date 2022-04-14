@@ -31,7 +31,7 @@ var en_run_speed = 70 # pix?
 
 # Игрок
 const pl_radius_px = 16
-var pl_color = Color.black
+var pl_color = Color.lightslategray
 var pl_start_point = Vector2(road_size_px / 2, road_size_px / 2)
 #var pl_vision_radius_px = 394
 var pl_speed = 150 # pix?
