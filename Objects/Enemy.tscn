@@ -7,7 +7,7 @@
 radius = 16.0
 
 [sub_resource type="OccluderPolygon2D" id=2]
-cull_mode = 2
+cull_mode = 1
 polygon = PoolVector2Array( 0, -16, 11, -12, 16, 0, 12, 11, 0, 16, -11, 12, -16, 0, -12, -11 )
 
 [node name="Enemy" type="KinematicBody2D"]
@@ -26,7 +26,6 @@ wait_time = 5.0
 autostart = true
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-visible = false
 occluder = SubResource( 2 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

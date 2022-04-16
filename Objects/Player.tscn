@@ -68,7 +68,7 @@ texture = ExtResource( 3 )
 [node name="Tb_time_after_use" type="Timer" parent="."]
 wait_time = 2.0
 
-[node name="Tb_recovering_timer" type="Timer" parent="."]
+[node name="Tb_timer" type="Timer" parent="."]
 
 [connection signal="timeout" from="Tb_time_after_use" to="." method="_on_Tb_time_after_use_timeout"]
-[connection signal="timeout" from="Tb_recovering_timer" to="." method="_on_Tb_recovering_timer_timeout"]
+[connection signal="timeout" from="Tb_timer" to="." method="_on_Tb_recovering_timer_timeout"]

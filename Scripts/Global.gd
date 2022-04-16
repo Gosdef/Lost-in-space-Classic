@@ -11,6 +11,7 @@ var room_table = Vector2(15, 15) # changed in _ready
 var rooms_column = room_table[0] # changed in _ready
 var rooms_line = room_table[1] # changed in _ready
 var room_number = rooms_column * rooms_line # changed in _ready
+var room_win_room = 1 # changed in _ready
 
 const room_thickness = 30.0
 const room_color = Color.black
@@ -41,6 +42,7 @@ var pl_rotation_speed = 3 # pix?
 var pl_turbo_balance_max = 100
 var pl_turbo_balance = pl_turbo_balance_max
 var pl_turbo_usage_speed = 10
+var pl_died = false
 
 
 # backup lighting
@@ -49,10 +51,10 @@ var bl_rotation_speed = 6 # pix?
 
 # Состояние игры
 var main_meny = true
-var game_meny = false
-var exposition_start = false
-var storyline_start = false
-var story_end = false
+#var game_meny = false
+#var exposition_start = false
+#var storyline_start = false
+#var story_end = false
 var room_visited = 0
 
 
@@ -60,12 +62,14 @@ func _ready():
 	var rn = RandomNumberGenerator.new()
 	rn.randomize()
 	
-	room_table = Vector2(rn.randi_range(4, 8), rn.randi_range(4, 8))
-	#room_table = Vector2(1, 1)
+	#room_table = Vector2(rn.randi_range(4, 8), rn.randi_range(4, 8))
+	room_table = Vector2(3, 3)
 	rooms_column = room_table[0]
 	rooms_line = room_table[1]
-	room_number = rooms_column * rooms_line
-	print('tb ', room_table)
+	#room_number = rooms_column * rooms_line
+	room_win_room = rn.randi_range(1, room_number)
+	room_win_room = 1
+	print('tb ', room_table, ' ', room_win_room)
 	
 	
 	room_height_px = rn.randi_range(5, 8) * 64

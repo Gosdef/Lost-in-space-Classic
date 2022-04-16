@@ -1,22 +1,59 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Another/ofont.ru_BureauAP.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends Button
+script/source = "extends Control
 
 
-func _pressed():
-	gl.exposition_start = true
+export (PackedScene) var game
+
+
+func _ready():
+	$GoToGame.disabled = true
+
+
+func _on_GoToGame_pressed():
+	#gl.exposition_start = true
 	get_tree().change_scene(\"res://Scenes/MainLevel.tscn\")
+
+
+func _on_Timer_timeout():
+	$GoToGame.disabled = false
 "
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 2 )
 
 [node name="StartMeny" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = SubResource( 1 )
 
 [node name="GoToGame" type="Button" parent="."]
 margin_left = 256.0
 margin_top = 192.0
 margin_right = 768.0
 margin_bottom = 320.0
+disabled = true
 text = "Start"
-script = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+margin_left = 256.0
+margin_top = 320.0
+margin_right = 768.0
+margin_bottom = 448.0
+custom_fonts/font = SubResource( 2 )
+text = "1. Передвигаться на WASD
+2. Переключать свет на 'L'
+3. Чтобы выйграть нужно найти большой жёлтый квадрат в одной из комнат
+4. Удачи!"
+autowrap = true
+
+[connection signal="pressed" from="GoToGame" to="." method="_on_GoToGame_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

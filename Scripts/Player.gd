@@ -36,9 +36,9 @@ func _process(delta):
 
 
 func _input(event):
-	if event.is_action_pressed("click"):
-		move_click_turn = true
-		target = get_global_mouse_position()
+	#if event.is_action_pressed("click"):
+	#	move_click_turn = true
+	#	target = get_global_mouse_position()
 	
 	if event.is_action_pressed("Light_switch"):
 		$StrongLight.enabled = not $StrongLight.enabled
@@ -59,10 +59,11 @@ func _physics_process(delta):
 		target = $".".position
 
 func get_input_click():
-	velocity = Vector2()
-	velocity = (target - position).normalized() * speed
-	if Input.is_action_pressed("Turbo"):
-		velocity *= 1.5
+	#velocity = Vector2()
+	#velocity = (target - position).normalized() * speed
+	#if Input.is_action_pressed("Turbo"):
+	#	velocity *= 1.5
+	pass
 
 func get_input_keys():
 	rotation_dir = 0
