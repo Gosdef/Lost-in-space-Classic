@@ -2,6 +2,7 @@ extends Node2D
 
 
 export (PackedScene) var enemy 
+export (PackedScene) var backup_light
 
 const chld_cnst = 2
 
@@ -33,15 +34,15 @@ func _draw():
 			var room_count = y + x * gl.rooms_line + 1
 			draw_room(Vector2(rwp_x, rwp_y), Vector2(gl.room_width_px + rwp_x, gl.room_height_px + rwp_y), room_count)
 
-func draw_room(start_pos, end_pos, room_count):	
+func draw_room(start_position, end_position, room_count):
 	var th = gl.room_thickness
-	start_pos = start_pos + Vector2(th / 2, th / 2)
-	end_pos = end_pos - Vector2(th / 2, th / 2)
+	var start_pos = start_position + Vector2(th / 2, th / 2)
+	var end_pos = end_position - Vector2(th / 2, th / 2)
 	
 	
 	# enemy generator
-	var rand = rn.randi_range(0, 9)
-	if rand <= 2:
+	var rand1m = rn.randi_range(0, 9)
+	if rand1m <= 2:
 		var enemy_in_room = enemy.instance()
 		add_child(enemy_in_room)
 		enemy_in_room.position = end_pos - Vector2(gl.room_width_px / 2, gl.room_height_px / 2)
@@ -66,6 +67,13 @@ func draw_room(start_pos, end_pos, room_count):
 	else:
 		lines[randOm] = [Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos) + Vector2(0, (gl.room_height_px + gl.room_door_px - th) / 2)]
 		lines.append([Vector2(start_pos) + Vector2(0, (gl.room_height_px - gl.room_door_px - th) / 2), Vector2(start_pos)])
+	
+	# backup light
+	#var rand2m = rn.randi_range(0, 1)
+	if rand1m <= 2:
+		var backup_light_in_room = backup_light.instance()
+		add_child(backup_light_in_room)
+		backup_light_in_room.position = start_position + Vector2(th + 10, th + 10)
 	
 	# for debug
 	draw_line(start_pos - Vector2(th / 2, 0), end_pos - Vector2(0, gl.room_height_px - th), gl.room_color, gl.room_thickness)

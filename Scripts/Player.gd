@@ -12,7 +12,7 @@ var move_key_cond = (
 	Input.is_action_pressed("ui_right") or
 	Input.is_action_pressed("ui_left") or
 	Input.is_action_pressed("ui_up") or
-	Input.is_action_pressed("ui_down")
+	Input.is_action_pressed("ui_down") 
 )
 
 
