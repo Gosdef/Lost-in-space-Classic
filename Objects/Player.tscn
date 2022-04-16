@@ -1,14 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/light.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Light_mask.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Player/Light_mask.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
 [sub_resource type="OccluderPolygon2D" id=2]
 polygon = PoolVector2Array( -15.9999, 16.0001, 0.00017376, 24, 16.0001, 15.9999, 23.9999, -8.00017, 16, -0.00011584, 13.0001, 8.99991, 7.0001, 13.9999, 0.00011584, 16, -6.9999, 14.0001, -12.9999, 9.00009, -16, 0.00011584, -24.0001, -7.99983 )
+
+[sub_resource type="OccluderPolygon2D" id=3]
+polygon = PoolVector2Array( 12, 12, 6.15398e-05, 17, -12, 12, -17, 6.15398e-05, -12, -12, -6.15398e-05, -17, 12, -12, 11, -11, -5.79198e-05, -16, -11, -11, -16, 5.79198e-05, -11, 11, 5.79198e-05, 16, 11, 11 )
 
 [node name="Player" type="KinematicBody2D"]
 rotation = 1.5708
@@ -25,20 +28,47 @@ zoom = Vector2( 1.5, 1.5 )
 limit_left = 0
 limit_top = 0
 
-[node name="Light2D" type="Light2D" parent="."]
-position = Vector2( -2.89599e-05, -8 )
+[node name="WeakLight" type="Light2D" parent="."]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
-texture_scale = 0.5
+texture_scale = 0.1
+energy = 0.8
 shadow_enabled = true
 shadow_buffer_size = 4096
 shadow_gradient_length = 1.0
 shadow_filter = 1
 shadow_filter_smooth = 64.0
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="WeakLight"]
+visible = false
 rotation = 1.5708
+scale = Vector2( 0.5, 0.5 )
 occluder = SubResource( 2 )
 
-[node name="LightMask" type="Sprite" parent="."]
+[node name="StrongLight" type="Light2D" parent="."]
+texture = ExtResource( 2 )
+texture_scale = 0.7
+color = Color( 0.992157, 1, 0.862745, 1 )
+shadow_enabled = true
+shadow_buffer_size = 4096
+shadow_gradient_length = 1.0
+shadow_filter = 1
+shadow_filter_smooth = 64.0
+shadow_item_cull_mask = 3
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="StrongLight"]
+light_mask = 2
+occluder = SubResource( 3 )
+light_mask = 2
+
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 1.5708
 texture = ExtResource( 3 )
+
+[node name="Tb_time_after_use" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Tb_recovering_timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Tb_time_after_use" to="." method="_on_Tb_time_after_use_timeout"]
+[connection signal="timeout" from="Tb_recovering_timer" to="." method="_on_Tb_recovering_timer_timeout"]

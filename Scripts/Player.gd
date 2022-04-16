@@ -39,6 +39,9 @@ func _input(event):
 	if event.is_action_pressed("click"):
 		move_click_turn = true
 		target = get_global_mouse_position()
+	
+	if event.is_action_pressed("Light_switch"):
+		$StrongLight.enabled = not $StrongLight.enabled
 
 
 func _physics_process(delta):
@@ -72,10 +75,15 @@ func get_input_keys():
 		velocity += Vector2(-speed / 2, 0).rotated(rotation)
 	if Input.is_action_pressed('ui_up'):
 		velocity += Vector2(speed, 0).rotated(rotation)
-	if Input.is_action_pressed("Turbo") and move_key_cond:
+	if Input.is_action_pressed("Turbo") and gl.pl_turbo_balance > 0 and move_key_cond:
+		#gl.pl_turbo_balance -= gl.pl_turbo_usage_speed
 		velocity += Vector2(speed / 2, 0).rotated(rotation)
+		#$Tb_recovering_timer.wait_time = 2
+		#$Tb_recovering_timer.start()
 
+func _on_Tb_time_after_use_timeout():
+	$Tb_time_after_use.autostart = true
 
-func _draw():
-	#draw_circle(pl_pos, gl.pl_radius_px, gl.pl_color)
-	pass
+func _on_Tb_recovering_timer_timeout():
+	if gl.pl_turbo_balance_max != gl.pl_turbo_balance:
+		gl.pl_turbo_balance += gl.pl_turbo_usage_speed

@@ -38,6 +38,9 @@ var pl_start_point = Vector2(road_size_px / 2, road_size_px / 2)
 #var pl_vision_radius_px = 394
 var pl_speed = 150 # pix?
 var pl_rotation_speed = 3 # pix?
+var pl_turbo_balance_max = 100
+var pl_turbo_balance = pl_turbo_balance_max
+var pl_turbo_usage_speed = 10
 
 
 # backup lighting
