@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+
 var pl_pos = $".".position
 var speed = gl.pl_speed
 var rotation_speed = gl.pl_rotation_speed

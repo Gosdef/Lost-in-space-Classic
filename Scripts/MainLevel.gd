@@ -1,13 +1,16 @@
 extends Node2D
 
 
+export (PackedScene) var enemy 
+
 const chld_cnst = 2
 
 var start_point = Vector2(0, 0)
+var rn = RandomNumberGenerator.new()
 
 
 func _ready():
-	randomize()
+	rn.randomize()
 
 
 func _process(delta):
@@ -30,26 +33,50 @@ func _draw():
 			var room_count = y + x * gl.rooms_line + 1
 			draw_room(Vector2(rwp_x, rwp_y), Vector2(gl.room_width_px + rwp_x, gl.room_height_px + rwp_y), room_count)
 
-func draw_room(start_pos, end_pos, room_count):
+func draw_room(start_pos, end_pos, room_count):	
 	var th = gl.room_thickness
 	start_pos = start_pos + Vector2(th / 2, th / 2)
 	end_pos = end_pos - Vector2(th / 2, th / 2)
 	
-	var four_lines = [
+	
+	# enemy generator
+	var rand = rn.randi_range(0, 9)
+	if rand <= 2:
+		var enemy_in_room = enemy.instance()
+		add_child(enemy_in_room)
+		enemy_in_room.position = end_pos - Vector2(gl.room_width_px / 2, gl.room_height_px / 2)
+	
+	# door generator
+	gl.room_door_px = rn.randi_range(3, 4) * 32
+	var lines = [
 		[Vector2(start_pos), Vector2(end_pos - Vector2(0, gl.room_height_px - th))], 
 		[Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos)], 
 		[Vector2(end_pos), Vector2(start_pos + Vector2(0, gl.room_height_px - th))], 
-		[Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos)]
-	]
+		[Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos)]]
+	var randOm = rn.randi_range(0, 3)
+	if randOm == 0:
+		lines[randOm] = [Vector2(start_pos), Vector2(end_pos - Vector2((gl.room_width_px + gl.room_door_px) / 2, gl.room_height_px - th))]
+		lines.append([Vector2(end_pos - Vector2((gl.room_width_px - gl.room_door_px) / 2, gl.room_height_px - th)), Vector2(end_pos - Vector2(0, gl.room_height_px - th))])
+	elif randOm == 1:
+		lines[randOm] = [Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos) - Vector2(0, (gl.room_height_px + gl.room_door_px) / 2)]
+		lines.append([Vector2(end_pos) - Vector2(0, (gl.room_height_px - gl.room_door_px) / 2), Vector2(end_pos)])
+	elif randOm == 2:
+		lines[randOm] = [Vector2(end_pos), Vector2(start_pos + Vector2((gl.room_width_px + gl.room_door_px) / 2, gl.room_height_px - th))] 
+		lines.append([Vector2(start_pos + Vector2((gl.room_width_px - gl.room_door_px) / 2, gl.room_height_px - th)), Vector2(start_pos + Vector2(0, gl.room_height_px - th))])
+	else:
+		lines[randOm] = [Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos) + Vector2(0, (gl.room_height_px + gl.room_door_px) / 2)]
+		lines.append([Vector2(start_pos) + Vector2(0, (gl.room_height_px - gl.room_door_px) / 2), Vector2(start_pos)])
 	
+	
+	# for debug
 	draw_line(start_pos - Vector2(th / 2, 0), end_pos - Vector2(0, gl.room_height_px - th), gl.room_color, gl.room_thickness)
 	draw_line(end_pos - Vector2(0, gl.room_height_px - th) - Vector2(0, th / 2), end_pos, gl.room_color, gl.room_thickness)
 	draw_line(end_pos + Vector2(th / 2, 0), start_pos + Vector2(0, gl.room_height_px - th), gl.room_color, gl.room_thickness)
 	draw_line(start_pos + Vector2(0, gl.room_height_px - th) + Vector2(0, th / 2), start_pos, gl.room_color, gl.room_thickness)
 	
 	var cnt = room_count * 4 - 4
-	for i in range(len(four_lines)):
-		var line = four_lines[i]
+	for i in range(len(lines)):
+		var line = lines[i]
 		var len_x = line[1][0] - line[0][0]
 		var len_y = line[1][1] - line[0][1]
 		var polygon_arr = [
@@ -77,7 +104,6 @@ func draw_room(start_pos, end_pos, room_count):
 		draw_wall(chld_wall, polygon_arr, line[0])
 		
 		cnt += 1
-		#TODO сделать генерацию дверей в комнатах
 
 func draw_light_shape(chld, polygon, lin0):
 	add_child(chld)

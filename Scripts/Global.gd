@@ -16,6 +16,7 @@ const room_thickness = 30.0
 const room_color = Color.black
 var room_height_px = 256 # changed in _ready
 var room_width_px = 448 # changed in _ready
+var room_door_px = 64 # changed in _ready
 
 const room_type = ['common', 'toilet', 'server room']
 
@@ -58,6 +59,8 @@ func _ready():
 	room_number = rooms_column * rooms_line
 	print('tb ', room_table)
 	
-	room_height_px = rn.randi_range(4, 8) * 64
-	room_width_px = rn.randi_range(4, 8) * 64
-	print('hw ', Vector2(room_height_px, room_width_px))
+	
+	room_height_px = rn.randi_range(5, 8) * 64
+	room_width_px = rn.randi_range(5, 8) * 64
+	room_door_px = rn.randi_range(3, 5) * 32
+	print('hw ', Vector2(room_height_px, room_width_px), ' ', room_door_px)
