@@ -55,18 +55,17 @@ func draw_room(start_pos, end_pos, room_count):
 		[Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos)]]
 	var randOm = rn.randi_range(0, 3)
 	if randOm == 0:
-		lines[randOm] = [Vector2(start_pos), Vector2(end_pos - Vector2((gl.room_width_px + gl.room_door_px) / 2, gl.room_height_px - th))]
-		lines.append([Vector2(end_pos - Vector2((gl.room_width_px - gl.room_door_px) / 2, gl.room_height_px - th)), Vector2(end_pos - Vector2(0, gl.room_height_px - th))])
+		lines[randOm] = [Vector2(start_pos), Vector2(end_pos - Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))]
+		lines.append([Vector2(end_pos - Vector2((gl.room_width_px - gl.room_door_px - th) / 2, gl.room_height_px - th)), Vector2(end_pos - Vector2(0, gl.room_height_px - th))])
 	elif randOm == 1:
-		lines[randOm] = [Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos) - Vector2(0, (gl.room_height_px + gl.room_door_px) / 2)]
-		lines.append([Vector2(end_pos) - Vector2(0, (gl.room_height_px - gl.room_door_px) / 2), Vector2(end_pos)])
+		lines[randOm] = [Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos) - Vector2(0, (gl.room_height_px + gl.room_door_px - th) / 2)]
+		lines.append([Vector2(end_pos) - Vector2(0, (gl.room_height_px - gl.room_door_px - th) / 2), Vector2(end_pos)])
 	elif randOm == 2:
-		lines[randOm] = [Vector2(end_pos), Vector2(start_pos + Vector2((gl.room_width_px + gl.room_door_px) / 2, gl.room_height_px - th))] 
-		lines.append([Vector2(start_pos + Vector2((gl.room_width_px - gl.room_door_px) / 2, gl.room_height_px - th)), Vector2(start_pos + Vector2(0, gl.room_height_px - th))])
+		lines[randOm] = [Vector2(end_pos), Vector2(start_pos + Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))] 
+		lines.append([Vector2(start_pos + Vector2((gl.room_width_px - gl.room_door_px - th) / 2, gl.room_height_px - th)), Vector2(start_pos + Vector2(0, gl.room_height_px - th))])
 	else:
-		lines[randOm] = [Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos) + Vector2(0, (gl.room_height_px + gl.room_door_px) / 2)]
-		lines.append([Vector2(start_pos) + Vector2(0, (gl.room_height_px - gl.room_door_px) / 2), Vector2(start_pos)])
-	
+		lines[randOm] = [Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos) + Vector2(0, (gl.room_height_px + gl.room_door_px - th) / 2)]
+		lines.append([Vector2(start_pos) + Vector2(0, (gl.room_height_px - gl.room_door_px - th) / 2), Vector2(start_pos)])
 	
 	# for debug
 	draw_line(start_pos - Vector2(th / 2, 0), end_pos - Vector2(0, gl.room_height_px - th), gl.room_color, gl.room_thickness)
