@@ -3,13 +3,10 @@ extends StaticBody2D
 
 export (PackedScene) var end
 
-var cnt = 0
-
 
 func _on_Area2D_body_entered(body):
-	print('Entered')
-	cnt += 1
-	if cnt == 2:
+	if body.name == 'Player':
+		print('Entered')
 		$Before_end.start()
 
 func _on_Before_end_timeout():

@@ -19,4 +19,4 @@ visible = false
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.00784314, 0.00784314, 0.00784314, 1 )
+color = Color( 0, 0, 0, 1 )

@@ -25,10 +25,10 @@ const room_type = ['common', 'toilet', 'server room']
 # Враги
 const en_radius_px = 16
 const en_bos_radius_px = 32
-const en_detection_radius_px = 192
+const en_detection_radius_px = 150
 var en_color = Color.blue
-var en_normal_speed = 70 # pix?
-var en_run_speed = 150 # pix?
+var en_normal_speed = 100 # pix?
+var en_run_speed = 130 # pix?
 var en_rotation_speed = 3 # pix?
 
 
@@ -39,9 +39,9 @@ var pl_start_point = Vector2(road_size_px / 2, road_size_px / 2)
 #var pl_vision_radius_px = 394
 var pl_speed = 150 # pix?
 var pl_rotation_speed = 3 # pix?
-var pl_turbo_balance_max = 100
-var pl_turbo_balance = pl_turbo_balance_max
-var pl_turbo_usage_speed = 10
+#var pl_turbo_balance_max = 100
+#var pl_turbo_balance = pl_turbo_balance_max
+#var pl_turbo_usage_speed = 10
 var pl_died = false
 
 
@@ -58,21 +58,27 @@ var main_meny = true
 var room_visited = 0
 
 
-func _ready():
+func load_settings():
 	var rn = RandomNumberGenerator.new()
 	rn.randomize()
 	
 	#room_table = Vector2(rn.randi_range(4, 8), rn.randi_range(4, 8))
-	room_table = Vector2(3, 3)
+	room_table = Vector2(4, 3)
+	#room_table = Vector2(1, 1)
 	rooms_column = room_table[0]
 	rooms_line = room_table[1]
-	#room_number = rooms_column * rooms_line
-	room_win_room = rn.randi_range(1, room_number)
-	room_win_room = 1
+	room_number = rooms_column * rooms_line
+	room_win_room = rn.randi_range(int(room_number / 2), room_number)
+	#room_win_room = 1
 	print('tb ', room_table, ' ', room_win_room)
 	
 	
 	room_height_px = rn.randi_range(5, 8) * 64
 	room_width_px = rn.randi_range(5, 8) * 64
-	room_door_px = rn.randi_range(3, 5) * 32
-	print('hw ', Vector2(room_height_px, room_width_px), ' ', room_door_px)
+	print('hw ', Vector2(room_height_px, room_width_px))
+	
+	pl_died = false
+
+
+func _ready():
+	load_settings()

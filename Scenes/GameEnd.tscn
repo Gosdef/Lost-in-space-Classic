@@ -18,6 +18,7 @@ func _ready():
 
 
 func _on_Go_to_meny_pressed():
+	gl.load_settings()
 	get_tree().change_scene_to(meny)
 
 

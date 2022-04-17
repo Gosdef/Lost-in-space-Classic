@@ -3,7 +3,7 @@ extends KinematicBody2D
 
 var pl_pos = $".".position
 var speed = gl.pl_speed
-var rotation_speed = gl.pl_rotation_speed
+#var rotation_speed = gl.pl_rotation_speed
 var target = Vector2()
 var velocity = Vector2()
 var rotation_dir = 0
@@ -18,14 +18,16 @@ var move_key_cond = (
 
 func _ready():
 	$".".position = gl.pl_start_point
-	$Camera2D.limit_right = (gl.road_size_px + gl.room_width_px) * gl.rooms_column + gl.road_size_px
-	$Camera2D.limit_bottom = (gl.road_size_px + gl.room_height_px) * gl.rooms_line + gl.road_size_px
+	$Camera2D.limit_left = -gl.room_thickness
+	$Camera2D.limit_top = -gl.room_thickness
+	$Camera2D.limit_right = (gl.road_size_px + gl.room_width_px) * gl.rooms_column + gl.road_size_px + gl.room_thickness
+	$Camera2D.limit_bottom = (gl.road_size_px + gl.room_height_px) * gl.rooms_line + gl.road_size_px + gl.room_thickness
 	#TODO зависимость колизии от размера игрока)))
 
 
 func _process(delta):
 	speed = gl.pl_speed
-	rotation_speed = gl.pl_rotation_speed
+	#rotation_speed = gl.pl_rotation_speed
 	move_key_cond = (
 	Input.is_action_pressed("ui_right") or
 	Input.is_action_pressed("ui_left") or
@@ -48,13 +50,14 @@ func _physics_process(delta):
 	if (target - position).length() > 5 and move_click_turn and not move_key_cond:
 		if abs($".".get_angle_to(target)) > 0.1:
 			rotation_dir = $".".get_angle_to(target) / abs($".".get_angle_to(target))
-			rotation += rotation_dir * rotation_speed * delta
+			#rotation += rotation_dir * rotation_speed * delta
 		if abs($".".get_angle_to(target)) < 0.1:
 			get_input_click()
 			move_and_slide(velocity)
 	else:
 		get_input_keys()
-		rotation += rotation_dir * rotation_speed * delta
+		look_at(get_global_mouse_position())
+		#rotation += rotation_dir * rotation_speed * delta
 		move_and_slide(velocity)
 		target = $".".position
 
@@ -69,16 +72,17 @@ func get_input_keys():
 	rotation_dir = 0
 	velocity = Vector2()
 	if Input.is_action_pressed('ui_right'):
-		rotation_dir += 1
+		velocity.x += 1
 	if Input.is_action_pressed('ui_left'):
-		rotation_dir -= 1
+		velocity.x -= 1
 	if Input.is_action_pressed('ui_down'):
-		velocity += Vector2(-speed / 2, 0).rotated(rotation)
+		velocity.y += 1
 	if Input.is_action_pressed('ui_up'):
-		velocity += Vector2(speed, 0).rotated(rotation)
-	if Input.is_action_pressed("Turbo") and gl.pl_turbo_balance > 0 and move_key_cond:
+		velocity.y -= 1
+	velocity = velocity.normalized() * speed
+	#if Input.is_action_pressed("Turbo") and gl.pl_turbo_balance > 0 and move_key_cond:
 		#gl.pl_turbo_balance -= gl.pl_turbo_usage_speed
-		velocity += Vector2(speed / 2, 0).rotated(rotation)
+		#velocity += Vector2(speed / 2, 0).rotated(rotation)
 		#$Tb_recovering_timer.wait_time = 2
 		#$Tb_recovering_timer.start()
 

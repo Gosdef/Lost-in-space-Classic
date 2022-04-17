@@ -10,7 +10,8 @@ export (PackedScene) var game
 
 
 func _ready():
-	$GoToGame.disabled = true
+	#$GoToGame.disabled = true
+	pass
 
 
 func _on_GoToGame_pressed():
@@ -36,7 +37,6 @@ margin_left = 256.0
 margin_top = 192.0
 margin_right = 768.0
 margin_bottom = 320.0
-disabled = true
 text = "Start"
 
 [node name="Timer" type="Timer" parent="."]
@@ -51,7 +51,7 @@ margin_bottom = 448.0
 custom_fonts/font = SubResource( 2 )
 text = "1. Передвигаться на WASD
 2. Переключать свет на 'L'
-3. Чтобы выйграть нужно найти большой жёлтый квадрат в одной из комнат
+3. Чтобы выйграть нужно найти большой жёлтый квадрат в одной из комнат, прислониться к нему и подождать 3 секунды
 4. Удачи!"
 autowrap = true
 
