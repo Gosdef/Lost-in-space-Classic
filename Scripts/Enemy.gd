@@ -12,14 +12,19 @@ var target
 
 
 func _ready():
+	$AudioStreamPlayer2D.play()
 	rn.randomize()
+	
+	# Start moves
+	velocity = Vector2(rn.randi_range(-1, 1) * speed, 0).rotated(rotation)
+	rotation_dir = rn.randi_range(-1, 1)
 	
 	# Vision
 	var shape = CircleShape2D.new()
 	shape.radius = gl.en_detection_radius_px
 	$Visibility/CollisionShape2D.shape = shape
 	
-	#Die circle
+	# Die circle
 	var circle = CircleShape2D.new()
 	circle.radius = gl.en_radius_px + 5
 	$DieCircle/CollisionShape2D.shape = circle
@@ -28,9 +33,12 @@ func _ready():
 func _physics_process(delta):
 	update()
 	if target:
-		#watch()
-		rotation = (target.position - position).angle()
-		move_and_slide(Vector2((target.position - position).normalized() * speed_run))
+		gl.zombi_hunting = true
+		if gl.pl_light_on:
+			rotation = (target.position - position).angle()
+			move_and_slide(Vector2((target.position - position).normalized() * speed_run))
+		else:
+			watch()
 	else:
 		rotation += rotation_dir * rotation_speed * delta
 		move_and_slide(velocity)
@@ -45,11 +53,13 @@ func watch():
 	var result = space_state.intersect_ray(position, target.position, [self], collision_mask)
 	
 	if result:
-		rotation = (target.position - position).angle()
-		move_and_slide(Vector2((target.position - position).normalized() * speed_run))
+		var hit_pos = result.position
+		if result.collider.name == 'Player':
+			rotation = (target.position - position).angle()
+			move_and_slide(Vector2((target.position - position).normalized() * speed_run))
 
 func _draw():
-	#draw_circle(Vector2(), gl.en_detection_radius_px, Color.green)
+	#draw_circle(Vector2(), gl.en_detection_radius_px, Color(.850, .90, .250, 1))
 	pass
 
 
@@ -57,10 +67,15 @@ func _on_Visibility_body_entered(body):
 	if target: 
 		return
 	if body.name == 'Player': 
+		#$AudioStreamPlayer2D.play()
+		gl.zombi_hunting = true
 		target = body
 
 func _on_Visibility_body_exited(body):
-	if body == target: target = null
+	if body == target: 
+		#$AudioStreamPlayer2D.stop()
+		gl.zombi_hunting = false
+		target = null
 
 
 func _on_DieCircle_body_entered(body):

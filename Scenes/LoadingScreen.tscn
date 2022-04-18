@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Another/ofont.ru_BureauAP.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scenes/Main.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sprites/blackboard.jpg" type="Texture" id=3]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Control
+
+export (PackedScene) var meny
+
+func _on_GoToGame_timeout():
+	$Game.visible = true
+
+func _on_ShowTime_timeout():
+	$Timer.text = str(int($Timer.text) - 1)
+
+func _on_Game_pressed():
+	get_tree().change_scene_to(meny)
+"
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 80
+font_data = ExtResource( 1 )
+
+[node name="LoadingScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 242, 112 )
+script = SubResource( 2 )
+meny = ExtResource( 2 )
+
+[node name="Blackboard" type="Sprite" parent="."]
+position = Vector2( 512, 320 )
+scale = Vector2( 0.533333, 0.508744 )
+texture = ExtResource( 3 )
+
+[node name="Rules" type="Label" parent="."]
+margin_left = 192.0
+margin_top = 192.0
+margin_right = 896.0
+margin_bottom = 448.0
+custom_fonts/font = SubResource( 1 )
+text = "1. Передвигаться на WASD
+2. Фонарик смотрит по направлению мыши и его можно выключить на \"Q\"
+3. Нужно найти большой жёлтый квадрат в одной из комнат, прислониться к нему
+4. Опасайтесь синих точек (особенно когда они на вас бегут)
+5. Удачи!"
+valign = 1
+autowrap = true
+
+[node name="Timer" type="Label" parent="."]
+margin_left = 896.0
+margin_top = 512.0
+margin_right = 1024.0
+margin_bottom = 640.0
+custom_fonts/font = SubResource( 3 )
+text = "2"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="GoToGame" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="ShowTime" type="Timer" parent="."]
+autostart = true
+
+[node name="Game" type="Button" parent="."]
+visible = false
+margin_left = 896.0
+margin_top = 512.0
+margin_right = 1024.0
+margin_bottom = 640.0
+text = "play"
+
+[connection signal="timeout" from="GoToGame" to="." method="_on_GoToGame_timeout"]
+[connection signal="timeout" from="ShowTime" to="." method="_on_ShowTime_timeout"]
+[connection signal="pressed" from="Game" to="." method="_on_Game_pressed"]

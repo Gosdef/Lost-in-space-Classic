@@ -4,20 +4,31 @@ extends Node2D
 export (PackedScene) var enemy 
 export (PackedScene) var backup_light
 export (PackedScene) var escape_capsule
+export (PackedScene) var siren
 
 const chld_cnst = 2
 
 var start_point = Vector2(0, 0)
 var rn = RandomNumberGenerator.new()
+var copy = gl.zombi_hunting
 
 
 func _ready():
 	rn.randomize()
+	$Quiet.play()
 
 
 func _process(delta):
 	#update()
-	pass
+	
+	if gl.zombi_hunting != copy and gl.zombi_hunting == true:
+		copy = gl.zombi_hunting
+		$Quiet.stop()
+		#$Zombi.play()
+	elif gl.zombi_hunting != copy and gl.zombi_hunting == false:
+		copy = gl.zombi_hunting
+		$Quiet.play()
+		#$Zombi.stop()
 
 
 func _draw():
@@ -69,11 +80,12 @@ func draw_room(start_position, end_position, room_count):
 	var start_pos = start_position + Vector2(th / 2, th / 2)
 	var end_pos = end_position - Vector2(th / 2, th / 2)
 	
+	var spawn_door = rn.randi_range(0, 3)
+	var spawn_zombi = rn.randi_range(0, 9)
 	
 	# enemy generator
-	var zmbi_cnt = rn.randi_range(1, 5)
-	var rand1m = rn.randi_range(0, 9)
-	var zombi_cond = (rand1m <= 3)
+	var zmbi_cnt = rn.randi_range(3, 5)
+	var zombi_cond = (spawn_zombi <= 3)
 	var enemy_room = false
 	if zombi_cond and not win_room_cond:
 		for i in range(zmbi_cnt):
@@ -83,23 +95,31 @@ func draw_room(start_position, end_position, room_count):
 	
 	# door generator
 	gl.room_door_px = rn.randi_range(3, 4) * 32
-	var randOm = rn.randi_range(0, 3)
 	if zombi_cond and not win_room_cond: gl.room_door_px = 5 * 32
 	var lines = [
 		[Vector2(start_pos), Vector2(end_pos - Vector2(0, gl.room_height_px - th))], 
 		[Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos)], 
 		[Vector2(end_pos), Vector2(start_pos + Vector2(0, gl.room_height_px - th))], 
 		[Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos)]]
-	if randOm == 0:
+	if zombi_cond and not win_room_cond:
+		lines[0] = [Vector2(start_pos), Vector2(end_pos - Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))]
+		lines[1] = [Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos) - Vector2(0, (gl.room_height_px + gl.room_door_px - th) / 2)]
+		lines[2] = [Vector2(end_pos), Vector2(start_pos + Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))]
+		lines[3] = [Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos) + Vector2(0, (gl.room_height_px + gl.room_door_px - th) / 2)]
+		lines.append([Vector2(end_pos - Vector2((gl.room_width_px - gl.room_door_px - th) / 2, gl.room_height_px - th)), Vector2(end_pos - Vector2(0, gl.room_height_px - th))])
+		lines.append([Vector2(end_pos) - Vector2(0, (gl.room_height_px - gl.room_door_px - th) / 2), Vector2(end_pos)])
+		lines.append([Vector2(start_pos + Vector2((gl.room_width_px - gl.room_door_px - th) / 2, gl.room_height_px - th)), Vector2(start_pos + Vector2(0, gl.room_height_px - th))])
+		lines.append([Vector2(start_pos) + Vector2(0, (gl.room_height_px - gl.room_door_px - th) / 2), Vector2(start_pos)])
+	elif spawn_door == 0:
 		lines[0] = [Vector2(start_pos), Vector2(end_pos - Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))]
 		lines.append([Vector2(end_pos - Vector2((gl.room_width_px - gl.room_door_px - th) / 2, gl.room_height_px - th)), Vector2(end_pos - Vector2(0, gl.room_height_px - th))])
-	elif randOm == 1:
+	elif spawn_door == 1:
 		lines[1] = [Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos) - Vector2(0, (gl.room_height_px + gl.room_door_px - th) / 2)]
 		lines.append([Vector2(end_pos) - Vector2(0, (gl.room_height_px - gl.room_door_px - th) / 2), Vector2(end_pos)])
-	elif randOm == 2:
+	elif spawn_door == 2:
 		lines[2] = [Vector2(end_pos), Vector2(start_pos + Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))] 
 		lines.append([Vector2(start_pos + Vector2((gl.room_width_px - gl.room_door_px - th) / 2, gl.room_height_px - th)), Vector2(start_pos + Vector2(0, gl.room_height_px - th))])
-	elif randOm == 3:
+	elif spawn_door == 3:
 		lines[3] = [Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos) + Vector2(0, (gl.room_height_px + gl.room_door_px - th) / 2)]
 		lines.append([Vector2(start_pos) + Vector2(0, (gl.room_height_px - gl.room_door_px - th) / 2), Vector2(start_pos)])
 	

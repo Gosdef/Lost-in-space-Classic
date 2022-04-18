@@ -20,8 +20,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Project Alpha"
-run/main_scene="res://Scenes/Main.tscn"
+config/name="Lost in space (LIS)"
+run/main_scene="res://Scenes/LoadingScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -86,7 +86,7 @@ Turbo={
 }
 Light_switch={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":76,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

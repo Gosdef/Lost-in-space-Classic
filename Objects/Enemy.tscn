@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Sprites/Enemy/Enemy normal.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=2]
+[ext_resource path="res://Music/gorjaschij-zombi-iz-half-life.mp3" type="AudioStream" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -33,8 +34,13 @@ occluder = SubResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Visibility"]
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 4.0
 autostart = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+volume_db = -30.0
+attenuation = 9.84915
 
 [connection signal="body_entered" from="DieCircle" to="." method="_on_DieCircle_body_entered"]
 [connection signal="body_entered" from="Visibility" to="." method="_on_Visibility_body_entered"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Sprites/light.png" type="Texture" id=1]
+[ext_resource path="res://Music/Сирена тревоги - подводная лодка (www.hotplayer.ru).mp3" type="AudioStream" id=2]
 
 [sub_resource type="GDScript" id=2]
 script/source = "extends Light2D
@@ -13,6 +14,7 @@ func _process(delta):
 polygon = PoolVector2Array( -8, -8, -8, 8, -4, 8, -1, 0, -1, -1, 1, -1, 1, 0, 4, 8, 8, 8, 8, -8 )
 
 [node name="BackupLighting" type="Light2D"]
+rotation = 4.71239
 texture = ExtResource( 1 )
 color = Color( 0.611765, 0.156863, 0.156863, 1 )
 energy = 0.7
@@ -25,3 +27,10 @@ script = SubResource( 2 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource( 1 )
+
+[node name="Siren" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+volume_db = -50.0
+autoplay = true
+max_distance = 5000.0
+attenuation = 15.9999

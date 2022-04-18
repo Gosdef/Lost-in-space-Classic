@@ -27,8 +27,8 @@ const en_radius_px = 16
 const en_bos_radius_px = 32
 const en_detection_radius_px = 150
 var en_color = Color.blue
-var en_normal_speed = 100 # pix?
-var en_run_speed = 130 # pix?
+var en_normal_speed = 60 # pix?
+var en_run_speed = 80 # pix?
 var en_rotation_speed = 3 # pix?
 
 
@@ -37,19 +37,25 @@ const pl_radius_px = 16
 var pl_color = Color.lightslategray
 var pl_start_point = Vector2(road_size_px / 2, road_size_px / 2)
 #var pl_vision_radius_px = 394
-var pl_speed = 150 # pix?
+var pl_speed = 100 # pix?
 var pl_rotation_speed = 3 # pix?
 #var pl_turbo_balance_max = 100
 #var pl_turbo_balance = pl_turbo_balance_max
 #var pl_turbo_usage_speed = 10
 var pl_died = false
+var pl_light_on = true
 
 
 # backup lighting
-var bl_rotation_speed = 6 # pix?
+var bl_rotation_speed = 7 # pix?
 
 
 # Состояние игры
+var in_meny = true
+var quiet = false
+var zombi_hunting = false
+
+
 var main_meny = true
 #var game_meny = false
 #var exposition_start = false
@@ -59,6 +65,10 @@ var room_visited = 0
 
 
 func load_settings():
+	in_meny = true
+	quiet = false
+	zombi_hunting = false
+	
 	var rn = RandomNumberGenerator.new()
 	rn.randomize()
 	

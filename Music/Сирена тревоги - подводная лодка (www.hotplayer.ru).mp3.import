@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Сирена тревоги - подводная лодка (www.hotplayer.ru).mp3-a1f50259f385b09cd41c4ed6b4a8d4ca.mp3str"
+
+[deps]
+
+source_file="res://Music/Сирена тревоги - подводная лодка (www.hotplayer.ru).mp3"
+dest_files=[ "res://.import/Сирена тревоги - подводная лодка (www.hotplayer.ru).mp3-a1f50259f385b09cd41c4ed6b4a8d4ca.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

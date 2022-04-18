@@ -12,8 +12,8 @@ var move_key_cond = (
 	Input.is_action_pressed("ui_right") or
 	Input.is_action_pressed("ui_left") or
 	Input.is_action_pressed("ui_up") or
-	Input.is_action_pressed("ui_down") 
-)
+	Input.is_action_pressed("ui_down"))
+#TODO добавить игроку пистолет и 5 патронк нему
 
 
 func _ready():
@@ -43,6 +43,7 @@ func _input(event):
 	#	target = get_global_mouse_position()
 	
 	if event.is_action_pressed("Light_switch"):
+		gl.pl_light_on = not $StrongLight.enabled
 		$StrongLight.enabled = not $StrongLight.enabled
 
 

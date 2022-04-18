@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/muzyka-iz-filma-uzhasov-1.mp3-348f44ab24a92066fc2d6c24cb82207d.mp3str"
+
+[deps]
+
+source_file="res://Music/muzyka-iz-filma-uzhasov-1.mp3"
+dest_files=[ "res://.import/muzyka-iz-filma-uzhasov-1.mp3-348f44ab24a92066fc2d6c24cb82207d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
