@@ -45,6 +45,9 @@ var pl_rotation_speed = 3 # pix?
 #var pl_turbo_usage_speed = 10
 var pl_died = false
 var pl_light_on = true
+var pl_radar_on = false
+var pl_radar_on_cooldown = false
+var pl_radar_count = 3
 
 
 # backup lighting
@@ -69,12 +72,16 @@ func load_settings():
 	in_meny = true
 	quiet = false
 	zombi_hunting = false
+	pl_light_on = true
+	pl_radar_on = false
+	pl_radar_on_cooldown = false
+	pl_radar_count = 3
 	
 	var rn = RandomNumberGenerator.new()
 	rn.randomize()
 	
-	#room_table = Vector2(rn.randi_range(4, 8), rn.randi_range(4, 8))
-	room_table = Vector2(4, 3)
+	room_table = Vector2(rn.randi_range(4, 8), rn.randi_range(3, 6))
+	#room_table = Vector2(4, 3)
 	#room_table = Vector2(1, 1)
 	rooms_column = room_table[0]
 	rooms_line = room_table[1]

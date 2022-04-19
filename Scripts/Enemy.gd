@@ -35,6 +35,11 @@ func _ready():
 func _physics_process(delta):
 	update()
 	
+	if gl.pl_radar_on: 
+		$Light2D.visible = true
+	else:
+		$Light2D.visible = false
+	
 	if copy != gl.pl_light_on and gl.pl_light_on:
 		copy = gl.pl_light_on
 		var shape = CircleShape2D.new()
@@ -83,7 +88,7 @@ func watch(delta):
 			rotation = last_rotation
 			move_and_slide(last_velocity * speed * delta)
 
-func _draw():
+func _draw():	
 	#draw_circle(Vector2(), $Visibility/CollisionShape2D.shape.radius, Color(.850, .90, .250, 0.5))
 	pass
 

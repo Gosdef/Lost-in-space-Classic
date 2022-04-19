@@ -124,7 +124,7 @@ func draw_room(start_position, end_position, room_count):
 		lines.append([Vector2(start_pos) + Vector2(0, (gl.room_height_px - gl.room_door_px - th) / 2), Vector2(start_pos)])
 	
 	# backup light
-	if zombi_cond and not win_room_cond:
+	if zombi_cond and not win_room_cond and room_count != 1:
 		var backup_light_in_room = backup_light.instance()
 		add_child(backup_light_in_room)
 		backup_light_in_room.position = start_position + Vector2(th + 5, th + 5)

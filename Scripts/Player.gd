@@ -45,6 +45,13 @@ func _input(event):
 	if event.is_action_pressed("Light_switch"):
 		gl.pl_light_on = not $StrongLight.enabled
 		$StrongLight.enabled = not $StrongLight.enabled
+	
+	if event.is_action_pressed("Radar") and gl.pl_radar_on_cooldown == false and gl.pl_radar_count > 0:
+		gl.pl_radar_count -= 1
+		gl.pl_radar_on = true
+		gl.pl_radar_on_cooldown = true
+		$Timer_radar.start()
+		$Timer_radar_cooldown.start()
 
 
 func _physics_process(delta):
@@ -93,3 +100,10 @@ func _on_Tb_time_after_use_timeout():
 func _on_Tb_recovering_timer_timeout():
 	if gl.pl_turbo_balance_max != gl.pl_turbo_balance:
 		gl.pl_turbo_balance += gl.pl_turbo_usage_speed
+
+
+func _on_Timer_radar_timeout():
+	gl.pl_radar_on = false
+
+func _on_Timer_radar_cooldown_timeout():
+	gl.pl_radar_on_cooldown = false

@@ -73,5 +73,12 @@ wait_time = 2.0
 [node name="Listener2D" type="Listener2D" parent="."]
 current = true
 
+[node name="Timer_radar" type="Timer" parent="."]
+
+[node name="Timer_radar_cooldown" type="Timer" parent="."]
+wait_time = 10.0
+
 [connection signal="timeout" from="Tb_time_after_use" to="." method="_on_Tb_time_after_use_timeout"]
 [connection signal="timeout" from="Tb_timer" to="." method="_on_Tb_recovering_timer_timeout"]
+[connection signal="timeout" from="Timer_radar" to="." method="_on_Timer_radar_timeout"]
+[connection signal="timeout" from="Timer_radar_cooldown" to="." method="_on_Timer_radar_cooldown_timeout"]
