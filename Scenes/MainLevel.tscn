@@ -15,13 +15,13 @@ enemy = ExtResource( 2 )
 backup_light = ExtResource( 4 )
 escape_capsule = ExtResource( 6 )
 
-[node name="UI2" parent="." instance=ExtResource( 5 )]
-visible = false
-
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0, 0, 0, 1 )
+
+[node name="UI2" parent="." instance=ExtResource( 5 )]
+visible = false
 
 [node name="Quiet" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )

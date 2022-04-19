@@ -25,7 +25,8 @@ const room_type = ['common', 'toilet', 'server room']
 # Враги
 const en_radius_px = 16
 const en_bos_radius_px = 32
-const en_detection_radius_px = 150
+const en_detection_radius_light_on_px = 250
+const en_detection_radius_light_off_px = 150
 var en_color = Color.blue
 var en_normal_speed = 60 # pix?
 var en_run_speed = 80 # pix?
@@ -78,7 +79,9 @@ func load_settings():
 	rooms_column = room_table[0]
 	rooms_line = room_table[1]
 	room_number = rooms_column * rooms_line
-	room_win_room = rn.randi_range(int(room_number / 2), room_number)
+	room_win_room = rn.randi_range(2, room_number)
+	if room_win_room <= room_number / 2:
+		room_win_room = rn.randi_range(2, room_number)
 	#room_win_room = 1
 	print('tb ', room_table, ' ', room_win_room)
 	

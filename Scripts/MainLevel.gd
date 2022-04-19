@@ -84,10 +84,10 @@ func draw_room(start_position, end_position, room_count):
 	var spawn_zombi = rn.randi_range(0, 9)
 	
 	# enemy generator
-	var zmbi_cnt = rn.randi_range(3, 5)
+	var zmbi_cnt = rn.randi_range(2, 5)
 	var zombi_cond = (spawn_zombi <= 3)
 	var enemy_room = false
-	if zombi_cond and not win_room_cond:
+	if (zombi_cond or win_room_cond) and room_count != 1:
 		for i in range(zmbi_cnt):
 			var enemy_in_room = enemy.instance()
 			add_child(enemy_in_room)
