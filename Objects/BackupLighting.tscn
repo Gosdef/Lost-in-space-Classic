@@ -11,7 +11,7 @@ func _process(delta):
 "
 
 [sub_resource type="OccluderPolygon2D" id=1]
-polygon = PoolVector2Array( -8, -8, -8, 8, -4, 8, -1, 0, -1, -1, 1, -1, 1, 0, 4, 8, 8, 8, 8, -8 )
+polygon = PoolVector2Array( -2, -2, -8, 8, -4, 8, -1, 0, -1, -1, 1, -1, 1, 0, 4, 8, 8, 8, 2, -2 )
 
 [node name="BackupLighting" type="Light2D"]
 rotation = 4.71239

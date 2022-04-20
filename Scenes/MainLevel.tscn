@@ -17,11 +17,12 @@ escape_capsule = ExtResource( 6 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI2" parent="CanvasLayer" instance=ExtResource( 5 )]
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0, 0, 0, 1 )
-
-[node name="UI2" parent="." instance=ExtResource( 5 )]
-visible = false
 
 [node name="Quiet" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )

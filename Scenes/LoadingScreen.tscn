@@ -40,18 +40,15 @@ script = SubResource( 2 )
 meny = ExtResource( 2 )
 
 [node name="Blackboard" type="Sprite" parent="."]
-position = Vector2( 512, 320 )
-scale = Vector2( 0.533333, 0.508744 )
+position = Vector2( 512, 384 )
+scale = Vector2( 0.533333, 0.610493 )
 texture = ExtResource( 3 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Rules" type="Label" parent="."]
-margin_left = 128.0
-margin_top = 128.0
-margin_right = 768.0
-margin_bottom = 320.0
+margin_left = 192.0
+margin_top = 256.0
+margin_right = 832.0
+margin_bottom = 448.0
 custom_fonts/font = SubResource( 1 )
 text = "1. Передвигаться на WASD
 2. Фонарик можно выключить/включить на \"Q\", он влияет на агресивность зомби
@@ -63,10 +60,9 @@ valign = 1
 autowrap = true
 
 [node name="LastNews" type="Label" parent="."]
-margin_left = 792.0
-margin_top = 128.0
-margin_right = 1024.0
-margin_bottom = 320.0
+margin_top = 64.0
+margin_right = 232.0
+margin_bottom = 256.0
 custom_fonts/font = SubResource( 4 )
 text = "Последние новостти:
 1. После потерия игрока из поля зрения, зомби идёт в том же направлении, а не в случайном
@@ -75,14 +71,21 @@ autowrap = true
 
 [node name="Timer" type="Label" parent="."]
 margin_left = 896.0
-margin_top = 512.0
+margin_top = 640.0
 margin_right = 1024.0
-margin_bottom = 640.0
+margin_bottom = 768.0
 custom_fonts/font = SubResource( 3 )
 text = "2"
 align = 1
 valign = 1
 autowrap = true
+
+[node name="Game" type="Button" parent="."]
+margin_left = 192.0
+margin_top = 512.0
+margin_right = 832.0
+margin_bottom = 640.0
+text = "play"
 
 [node name="GoToGame" type="Timer" parent="."]
 wait_time = 2.0
@@ -92,14 +95,6 @@ autostart = true
 [node name="ShowTime" type="Timer" parent="."]
 autostart = true
 
-[node name="Game" type="Button" parent="."]
-visible = false
-margin_left = 192.0
-margin_top = 384.0
-margin_right = 832.0
-margin_bottom = 512.0
-text = "play"
-
+[connection signal="pressed" from="Game" to="." method="_on_Game_pressed"]
 [connection signal="timeout" from="GoToGame" to="." method="_on_GoToGame_timeout"]
 [connection signal="timeout" from="ShowTime" to="." method="_on_ShowTime_timeout"]
-[connection signal="pressed" from="Game" to="." method="_on_Game_pressed"]

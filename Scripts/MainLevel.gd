@@ -34,7 +34,7 @@ func _process(delta):
 func _draw():
 	# background draw
 	var field_x = (gl.road_size_px + gl.room_width_px) * gl.rooms_column + gl.road_size_px
-	var field_y = (gl.road_size_px + gl.room_height_px) * gl.rooms_line + gl.road_size_px
+	var field_y = (gl.road_size_px + gl.room_height_px) * gl.rooms_line + gl.road_size_px + 128
 	draw_rect(Rect2(Vector2(-gl.room_thickness, -gl.room_thickness), Vector2(field_x + 2 * gl.room_thickness, field_y + 2 * gl.room_thickness)), gl.background_color, true)
 	
 	
@@ -101,7 +101,7 @@ func draw_room(start_position, end_position, room_count):
 		[Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos)], 
 		[Vector2(end_pos), Vector2(start_pos + Vector2(0, gl.room_height_px - th))], 
 		[Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos)]]
-	if zombi_cond and not win_room_cond:
+	if zombi_cond and not win_room_cond and room_count != 1:
 		lines[0] = [Vector2(start_pos), Vector2(end_pos - Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))]
 		lines[1] = [Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos) - Vector2(0, (gl.room_height_px + gl.room_door_px - th) / 2)]
 		lines[2] = [Vector2(end_pos), Vector2(start_pos + Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))]

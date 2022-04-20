@@ -21,7 +21,7 @@ func _ready():
 	$Camera2D.limit_left = -gl.room_thickness
 	$Camera2D.limit_top = -gl.room_thickness
 	$Camera2D.limit_right = (gl.road_size_px + gl.room_width_px) * gl.rooms_column + gl.road_size_px + gl.room_thickness
-	$Camera2D.limit_bottom = (gl.road_size_px + gl.room_height_px) * gl.rooms_line + gl.road_size_px + gl.room_thickness
+	$Camera2D.limit_bottom = (gl.road_size_px + gl.room_height_px) * gl.rooms_line + gl.road_size_px + gl.room_thickness + 128 + gl.room_thickness
 	#TODO зависимость колизии от размера игрока)))
 
 
@@ -50,8 +50,17 @@ func _input(event):
 		gl.pl_radar_count -= 1
 		gl.pl_radar_on = true
 		gl.pl_radar_on_cooldown = true
-		$Timer_radar.start()
-		$Timer_radar_cooldown.start()
+		$Timers/Timer_radar.start()
+		$Timers/Timer_radar_cooldown.start()
+	
+	if event.is_action_pressed("Turbo") or event.is_action_released("Turbo"):
+		gl.pl_turbo_on = not gl.pl_turbo_on
+		if gl.pl_turbo_on:
+			$Timers/Tb_timer.start()
+			$Timers/Tb_time_after_use.stop()
+		else:
+			$Timers/Tb_timer.stop()
+			$Timers/Tb_time_after_use.start()
 
 
 func _physics_process(delta):
@@ -77,8 +86,12 @@ func get_input_click():
 	pass
 
 func get_input_keys():
+	var turbo_add = 1
 	rotation_dir = 0
 	velocity = Vector2()
+	
+	if gl.pl_turbo_on and gl.pl_turbo_balance > 0:
+		turbo_add = 1.5
 	if Input.is_action_pressed('ui_right'):
 		velocity.x += 1
 	if Input.is_action_pressed('ui_left'):
@@ -87,19 +100,8 @@ func get_input_keys():
 		velocity.y += 1
 	if Input.is_action_pressed('ui_up'):
 		velocity.y -= 1
-	velocity = velocity.normalized() * speed
-	#if Input.is_action_pressed("Turbo") and gl.pl_turbo_balance > 0 and move_key_cond:
-		#gl.pl_turbo_balance -= gl.pl_turbo_usage_speed
-		#velocity += Vector2(speed / 2, 0).rotated(rotation)
-		#$Tb_recovering_timer.wait_time = 2
-		#$Tb_recovering_timer.start()
-
-func _on_Tb_time_after_use_timeout():
-	$Tb_time_after_use.autostart = true
-
-func _on_Tb_recovering_timer_timeout():
-	if gl.pl_turbo_balance_max != gl.pl_turbo_balance:
-		gl.pl_turbo_balance += gl.pl_turbo_usage_speed
+	velocity = velocity.normalized() * speed * turbo_add
+	
 
 
 func _on_Timer_radar_timeout():
@@ -107,3 +109,14 @@ func _on_Timer_radar_timeout():
 
 func _on_Timer_radar_cooldown_timeout():
 	gl.pl_radar_on_cooldown = false
+
+
+func _on_Tb_timer_timeout():
+	if gl.pl_turbo_balance > 0:
+		gl.pl_turbo_balance -= gl.pl_turbo_usage_speed
+		#print('turbo_balance -- ', gl.pl_turbo_balance)
+
+func _on_Tb_time_after_use_timeout():
+	if gl.pl_turbo_balance <= gl.pl_turbo_balance_max + gl.pl_turbo_usage_speed:
+		gl.pl_turbo_balance += gl.pl_turbo_usage_speed
+		#print('turbo_balance ++ ', gl.pl_turbo_balance)

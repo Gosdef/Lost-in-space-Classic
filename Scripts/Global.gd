@@ -35,16 +35,21 @@ var en_rotation_speed = 3 # pix?
 
 # Игрок
 const pl_radius_px = 16
-var pl_color = Color.lightslategray
+#var pl_color = Color.lightslategray
 var pl_start_point = Vector2(road_size_px / 2, road_size_px / 2)
 #var pl_vision_radius_px = 394
 var pl_speed = 100 # pix?
 var pl_rotation_speed = 3 # pix?
-#var pl_turbo_balance_max = 100
-#var pl_turbo_balance = pl_turbo_balance_max
-#var pl_turbo_usage_speed = 10
+
+var pl_turbo_on = false
+var pl_turbo_balance_max = 100
+var pl_turbo_balance = pl_turbo_balance_max
+var pl_turbo_usage_speed = 10
+
 var pl_died = false
+
 var pl_light_on = true
+
 var pl_radar_on = false
 var pl_radar_on_cooldown = false
 var pl_radar_count = 3
@@ -80,8 +85,8 @@ func load_settings():
 	var rn = RandomNumberGenerator.new()
 	rn.randomize()
 	
-	room_table = Vector2(rn.randi_range(4, 8), rn.randi_range(3, 6))
-	#room_table = Vector2(4, 3)
+	#room_table = Vector2(rn.randi_range(4, 8), rn.randi_range(3, 6))
+	room_table = Vector2(4, 3)
 	#room_table = Vector2(1, 1)
 	rooms_column = room_table[0]
 	rooms_line = room_table[1]

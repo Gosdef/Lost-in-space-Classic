@@ -28,6 +28,10 @@ zoom = Vector2( 1.2, 1.2 )
 limit_left = 0
 limit_top = 0
 
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 1.5708
+texture = ExtResource( 3 )
+
 [node name="WeakLight" type="Light2D" parent="."]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
@@ -61,24 +65,22 @@ light_mask = 2
 occluder = SubResource( 3 )
 light_mask = 2
 
-[node name="Sprite" type="Sprite" parent="."]
-rotation = 1.5708
-texture = ExtResource( 3 )
-
-[node name="Tb_time_after_use" type="Timer" parent="."]
-wait_time = 2.0
-
-[node name="Tb_timer" type="Timer" parent="."]
-
 [node name="Listener2D" type="Listener2D" parent="."]
 current = true
 
-[node name="Timer_radar" type="Timer" parent="."]
+[node name="Timers" type="Timer" parent="."]
 
-[node name="Timer_radar_cooldown" type="Timer" parent="."]
+[node name="Tb_timer" type="Timer" parent="Timers"]
+
+[node name="Tb_time_after_use" type="Timer" parent="Timers"]
+wait_time = 2.0
+
+[node name="Timer_radar" type="Timer" parent="Timers"]
+
+[node name="Timer_radar_cooldown" type="Timer" parent="Timers"]
 wait_time = 10.0
 
-[connection signal="timeout" from="Tb_time_after_use" to="." method="_on_Tb_time_after_use_timeout"]
-[connection signal="timeout" from="Tb_timer" to="." method="_on_Tb_recovering_timer_timeout"]
-[connection signal="timeout" from="Timer_radar" to="." method="_on_Timer_radar_timeout"]
-[connection signal="timeout" from="Timer_radar_cooldown" to="." method="_on_Timer_radar_cooldown_timeout"]
+[connection signal="timeout" from="Timers/Tb_timer" to="." method="_on_Tb_timer_timeout"]
+[connection signal="timeout" from="Timers/Tb_time_after_use" to="." method="_on_Tb_time_after_use_timeout"]
+[connection signal="timeout" from="Timers/Timer_radar" to="." method="_on_Timer_radar_timeout"]
+[connection signal="timeout" from="Timers/Timer_radar_cooldown" to="." method="_on_Timer_radar_cooldown_timeout"]
