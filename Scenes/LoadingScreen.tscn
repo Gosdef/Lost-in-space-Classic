@@ -46,20 +46,22 @@ texture = ExtResource( 3 )
 
 [node name="Rules" type="Label" parent="."]
 margin_left = 192.0
-margin_top = 256.0
+margin_top = 192.0
 margin_right = 832.0
-margin_bottom = 448.0
+margin_bottom = 512.0
 custom_fonts/font = SubResource( 1 )
 text = "1. Передвигаться на WASD
 2. Фонарик можно выключить/включить на \"Q\", он влияет на агресивность зомби
-3. На \"E\" можно не на долго подсветить зомби, использовать можно 2 раза, есть кд
-3. Нужно найти большой жёлтый квадрат в одной из комнат и прислониться к нему
-4. Опасайтесь синих точек (особенно когда они на вас бегут)
-5. Скоро будет добалено оружие"
+3. На \"E\" можно не на долго подсветить зомби, использовать можно несколько раз, есть кд
+4. На \"SHIFT\" можно ускоряться
+5. Нужно найти большой жёлтый квадрат в одной из комнат и прислониться к нему
+6. Опасайтесь синих точек (особенно когда они на вас бегут)
+7. Скоро будет добалено оружие"
 valign = 1
 autowrap = true
 
 [node name="LastNews" type="Label" parent="."]
+visible = false
 margin_top = 64.0
 margin_right = 232.0
 margin_bottom = 256.0
@@ -81,6 +83,7 @@ valign = 1
 autowrap = true
 
 [node name="Game" type="Button" parent="."]
+visible = false
 margin_left = 192.0
 margin_top = 512.0
 margin_right = 832.0

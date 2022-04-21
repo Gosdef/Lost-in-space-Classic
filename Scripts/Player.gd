@@ -21,7 +21,7 @@ func _ready():
 	$Camera2D.limit_left = -gl.room_thickness
 	$Camera2D.limit_top = -gl.room_thickness
 	$Camera2D.limit_right = (gl.road_size_px + gl.room_width_px) * gl.rooms_column + gl.road_size_px + gl.room_thickness
-	$Camera2D.limit_bottom = (gl.road_size_px + gl.room_height_px) * gl.rooms_line + gl.road_size_px + gl.room_thickness + 128 + gl.room_thickness
+	$Camera2D.limit_bottom = (gl.road_size_px + gl.room_height_px) * gl.rooms_line + gl.road_size_px + gl.room_thickness + 64 + gl.room_thickness
 	#TODO зависимость колизии от размера игрока)))
 
 
@@ -29,10 +29,10 @@ func _process(delta):
 	speed = gl.pl_speed
 	#rotation_speed = gl.pl_rotation_speed
 	move_key_cond = (
-	Input.is_action_pressed("ui_right") or
-	Input.is_action_pressed("ui_left") or
-	Input.is_action_pressed("ui_up") or
-	Input.is_action_pressed("ui_down"))
+		Input.is_action_pressed("ui_right") or
+		Input.is_action_pressed("ui_left") or
+		Input.is_action_pressed("ui_up") or
+		Input.is_action_pressed("ui_down"))
 	
 	update()
 
@@ -62,21 +62,24 @@ func _input(event):
 			$Timers/Tb_timer.stop()
 			$Timers/Tb_time_after_use.start()
 
+	if event.is_action_pressed('Reload') and gl.pl_bullet_global_cnt > 0 and gl.pl_bullet_clip_cnt != 12:
+		$Timers/Reload.start()
+
 
 func _physics_process(delta):
-	if (target - position).length() > 5 and move_click_turn and not move_key_cond:
-		if abs($".".get_angle_to(target)) > 0.1:
-			rotation_dir = $".".get_angle_to(target) / abs($".".get_angle_to(target))
-			#rotation += rotation_dir * rotation_speed * delta
-		if abs($".".get_angle_to(target)) < 0.1:
-			get_input_click()
-			move_and_slide(velocity)
-	else:
-		get_input_keys()
-		look_at(get_global_mouse_position())
-		#rotation += rotation_dir * rotation_speed * delta
-		move_and_slide(velocity)
-		target = $".".position
+	#if (target - position).length() > 5 and move_click_turn and not move_key_cond:
+	#	if abs($".".get_angle_to(target)) > 0.1:
+	#		rotation_dir = $".".get_angle_to(target) / abs($".".get_angle_to(target))
+	#		#rotation += rotation_dir * rotation_speed * delta
+	#	if abs($".".get_angle_to(target)) < 0.1:
+	#		get_input_click()
+	#		move_and_slide(velocity)
+	#else:
+	get_input_keys()
+	look_at(get_global_mouse_position())
+	#rotation += rotation_dir * rotation_speed * delta
+	move_and_slide(velocity)
+	#target = $".".position
 
 func get_input_click():
 	#velocity = Vector2()
@@ -117,6 +120,20 @@ func _on_Tb_timer_timeout():
 		#print('turbo_balance -- ', gl.pl_turbo_balance)
 
 func _on_Tb_time_after_use_timeout():
-	if gl.pl_turbo_balance <= gl.pl_turbo_balance_max + gl.pl_turbo_usage_speed:
+	if gl.pl_turbo_balance < gl.pl_turbo_balance_max:
 		gl.pl_turbo_balance += gl.pl_turbo_usage_speed
 		#print('turbo_balance ++ ', gl.pl_turbo_balance)
+
+
+func _on_Reload_timeout():
+	if gl.pl_bullet_global_cnt >= gl.pl_bullet_clip_max:
+		gl.pl_bullet_global_cnt -= gl.pl_bullet_clip_max - gl.pl_bullet_clip_cnt
+		gl.pl_bullet_clip_cnt = gl.pl_bullet_clip_max
+		
+	elif gl.pl_bullet_clip_cnt + gl.pl_bullet_global_cnt > gl.pl_bullet_clip_max:
+		gl.pl_bullet_global_cnt = (gl.pl_bullet_clip_cnt + gl.pl_bullet_global_cnt) - gl.pl_bullet_clip_max
+		gl.pl_bullet_clip_cnt = gl.pl_bullet_clip_max
+	
+	elif gl.pl_bullet_clip_cnt + gl.pl_bullet_global_cnt < gl.pl_bullet_clip_max:
+		gl.pl_bullet_clip_cnt += gl.pl_bullet_global_cnt
+		gl.pl_bullet_global_cnt = 0

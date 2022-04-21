@@ -54,6 +54,11 @@ var pl_radar_on = false
 var pl_radar_on_cooldown = false
 var pl_radar_count = 3
 
+var pl_bullet_global_cnt = 6
+var pl_bullet_clip_cnt = 12
+var pl_bullet_clip_max = 12
+var pl_bullet_speed = 700 # pix?
+
 
 # backup lighting
 var bl_rotation_speed = 7 # pix?

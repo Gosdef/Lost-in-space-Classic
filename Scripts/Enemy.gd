@@ -9,6 +9,7 @@ var rotation_speed = gl.en_rotation_speed
 var rn = RandomNumberGenerator.new()
 var last_velocity
 var last_rotation
+var hit_cnt = 0
 
 var target
 var copy = gl.pl_light_on
@@ -93,6 +94,31 @@ func _draw():
 	pass
 
 
+func hit():
+	hit_cnt += 1
+	if hit_cnt == 1:
+		speed *= 0.6
+		speed_run *= 0.6
+		$Sprite.texture = load("res://Sprites/Enemy/Hit once.png")
+	elif hit_cnt == 2:
+		speed *= 0.8
+		speed_run *= 0.8
+		$Sprite.texture = load("res://Sprites/Enemy/Hit twice.png")
+	elif hit_cnt == 3:
+		speed *= 0.5
+		speed_run *= 0.5
+		$Sprite.texture = load("res://Sprites/Enemy/Hit three times.png")
+	else:
+		speed = 0
+		speed_run = 0
+		$Sprite.texture = load("res://Sprites/Enemy/Died.png")
+		$Light2D.color = Color.red
+		$LightOccluder2D.visible = false
+		$Visibility.visible = false
+		$DieCircle.queue_free()
+		$AudioStreamPlayer2D.queue_free()
+
+
 func _on_Visibility_body_entered(body):
 	if target: 
 		return
@@ -114,3 +140,5 @@ func _on_DieCircle_body_entered(body):
 	if body.name == 'Player':
 		gl.pl_died = true
 		get_tree().change_scene("res://Scenes/GameEnd.tscn")
+	elif body.is_in_group('Bullet'):
+		hit()

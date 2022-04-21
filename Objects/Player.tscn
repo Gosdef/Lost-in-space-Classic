@@ -2,35 +2,48 @@
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/light.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/Player/Light_mask.png" type="Texture" id=3]
-
-[sub_resource type="CircleShape2D" id=1]
-radius = 16.0
+[ext_resource path="res://Sprites/Player/Player.png" type="Texture" id=3]
+[ext_resource path="res://Objects/Gun.tscn" type="PackedScene" id=4]
 
 [sub_resource type="OccluderPolygon2D" id=2]
 polygon = PoolVector2Array( -15.9999, 16.0001, 0.00017376, 24, 16.0001, 15.9999, 23.9999, -8.00017, 16, -0.00011584, 13.0001, 8.99991, 7.0001, 13.9999, 0.00011584, 16, -6.9999, 14.0001, -12.9999, 9.00009, -16, 0.00011584, -24.0001, -7.99983 )
 
 [sub_resource type="OccluderPolygon2D" id=3]
-polygon = PoolVector2Array( 12, 12, 6.15398e-05, 17, -12, 12, -17, 6.15398e-05, -12, -12, -6.15398e-05, -17, 12, -12, 11, -11, -5.79198e-05, -16, -11, -11, -16, 5.79198e-05, -11, 11, 5.79198e-05, 16, 11, 11 )
+polygon = PoolVector2Array( -4.99999, 4.00002, -7, 2.53916e-05, -7, -0.999975, -5.00002, -4.99998, 3.99998, -5.00001, 2.99999, -4.00001, -5.00001, -3.99998, -6, -0.999978, -6, 2.16961e-05, -4.99999, 3.00002, 3.00001, 2.99999, 4.00001, 3.99999 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
 rotation = 1.5708
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
-shape = SubResource( 1 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 18, 4.99993, 18, -6.51598e-05, 17, -5.00006, 13, -10, 6.99995, -14, -3.00005, -14, -9.00006, -16, -13.0001, -16, -19, -9.99993, -19, -5.99993, -17, -2.99994, -17, 5.00006, -15, 9.00005, -9.99995, 14, -5.99995, 14, -3.99995, 13, -0.999964, 10, 1.00003, 7, 4.00002, 4.99999, 4.00001, 2.99999, 3.00001, 1.99999, 2.99998, -5.00001, 12, -1.00004, 13, 4.99995, 14, 5.99995, 17, 5.99994 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 rotation = 1.5708
 current = true
-zoom = Vector2( 1.2, 1.2 )
+zoom = Vector2( 0.8, 0.8 )
 limit_left = 0
 limit_top = 0
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Sprite" type="Sprite" parent="."]
-rotation = 1.5708
+[node name="Player" type="Sprite" parent="."]
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Gun" parent="." instance=ExtResource( 4 )]
+position = Vector2( 23, 2.99992 )
+
+[node name="Listener2D" type="Listener2D" parent="."]
+position = Vector2( -6.00001, -1.99998 )
+current = true
 
 [node name="WeakLight" type="Light2D" parent="."]
 scale = Vector2( 2, 2 )
@@ -42,6 +55,9 @@ shadow_buffer_size = 4096
 shadow_gradient_length = 1.0
 shadow_filter = 1
 shadow_filter_smooth = 64.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="WeakLight"]
 visible = false
@@ -50,6 +66,7 @@ scale = Vector2( 0.5, 0.5 )
 occluder = SubResource( 2 )
 
 [node name="StrongLight" type="Light2D" parent="."]
+position = Vector2( -6.00001, -1.99998 )
 texture = ExtResource( 2 )
 texture_scale = 0.7
 color = Color( 0.992157, 1, 0.862745, 1 )
@@ -59,28 +76,32 @@ shadow_gradient_length = 1.0
 shadow_filter = 1
 shadow_filter_smooth = 64.0
 shadow_item_cull_mask = 3
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="StrongLight"]
 light_mask = 2
 occluder = SubResource( 3 )
 light_mask = 2
 
-[node name="Listener2D" type="Listener2D" parent="."]
-current = true
-
 [node name="Timers" type="Timer" parent="."]
 
 [node name="Tb_timer" type="Timer" parent="Timers"]
+wait_time = 0.2
 
 [node name="Tb_time_after_use" type="Timer" parent="Timers"]
-wait_time = 2.0
 
 [node name="Timer_radar" type="Timer" parent="Timers"]
 
 [node name="Timer_radar_cooldown" type="Timer" parent="Timers"]
 wait_time = 10.0
 
+[node name="Reload" type="Timer" parent="Timers"]
+wait_time = 1.5
+
 [connection signal="timeout" from="Timers/Tb_timer" to="." method="_on_Tb_timer_timeout"]
 [connection signal="timeout" from="Timers/Tb_time_after_use" to="." method="_on_Tb_time_after_use_timeout"]
 [connection signal="timeout" from="Timers/Timer_radar" to="." method="_on_Timer_radar_timeout"]
 [connection signal="timeout" from="Timers/Timer_radar_cooldown" to="." method="_on_Timer_radar_cooldown_timeout"]
+[connection signal="timeout" from="Timers/Reload" to="." method="_on_Reload_timeout"]

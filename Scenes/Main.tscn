@@ -80,6 +80,7 @@ autowrap = true
 stream = ExtResource( 3 )
 volume_db = -5.0
 autoplay = true
+stream_paused = true
 
 [connection signal="pressed" from="GoToGame" to="." method="_on_GoToGame_pressed"]
 [connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]

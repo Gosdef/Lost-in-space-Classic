@@ -75,6 +75,10 @@ func _draw():
 			draw_room(Vector2(rwp_x, rwp_y), Vector2(gl.room_width_px + rwp_x, gl.room_height_px + rwp_y), room_count)
 
 func draw_room(start_position, end_position, room_count):
+	var zombi_room_cond =(
+		room_count != gl.room_win_room and
+		room_count != 1
+	)
 	var win_room_cond = (room_count == gl.room_win_room)
 	var th = gl.room_thickness
 	var start_pos = start_position + Vector2(th / 2, th / 2)
@@ -84,10 +88,10 @@ func draw_room(start_position, end_position, room_count):
 	var spawn_zombi = rn.randi_range(0, 9)
 	
 	# enemy generator
-	var zmbi_cnt = rn.randi_range(2, 5)
-	var zombi_cond = (spawn_zombi <= 3)
+	var zmbi_cnt = rn.randi_range(3, 7)
+	var zombi_cond = (spawn_zombi <= 4)
 	var enemy_room = false
-	if (zombi_cond or win_room_cond) and room_count != 1:
+	if zombi_cond and zombi_room_cond:
 		for i in range(zmbi_cnt):
 			var enemy_in_room = enemy.instance()
 			add_child(enemy_in_room)
@@ -95,13 +99,13 @@ func draw_room(start_position, end_position, room_count):
 	
 	# door generator
 	gl.room_door_px = rn.randi_range(3, 4) * 32
-	if zombi_cond and not win_room_cond: gl.room_door_px = 5 * 32
+	if zombi_cond and zombi_room_cond: gl.room_door_px = 5 * 32
 	var lines = [
 		[Vector2(start_pos), Vector2(end_pos - Vector2(0, gl.room_height_px - th))], 
 		[Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos)], 
 		[Vector2(end_pos), Vector2(start_pos + Vector2(0, gl.room_height_px - th))], 
 		[Vector2(start_pos + Vector2(0, gl.room_height_px)), Vector2(start_pos)]]
-	if zombi_cond and not win_room_cond and room_count != 1:
+	if zombi_cond and zombi_room_cond:
 		lines[0] = [Vector2(start_pos), Vector2(end_pos - Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))]
 		lines[1] = [Vector2(end_pos - Vector2(0, gl.room_height_px - th)), Vector2(end_pos) - Vector2(0, (gl.room_height_px + gl.room_door_px - th) / 2)]
 		lines[2] = [Vector2(end_pos), Vector2(start_pos + Vector2((gl.room_width_px + gl.room_door_px - th) / 2, gl.room_height_px - th))]
@@ -124,7 +128,7 @@ func draw_room(start_position, end_position, room_count):
 		lines.append([Vector2(start_pos) + Vector2(0, (gl.room_height_px - gl.room_door_px - th) / 2), Vector2(start_pos)])
 	
 	# backup light
-	if zombi_cond and not win_room_cond and room_count != 1:
+	if zombi_cond and zombi_room_cond:
 		var backup_light_in_room = backup_light.instance()
 		add_child(backup_light_in_room)
 		backup_light_in_room.position = start_position + Vector2(th + 5, th + 5)

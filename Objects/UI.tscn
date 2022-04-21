@@ -7,11 +7,11 @@
 size = 20
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 size = 20
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 20
 font_data = ExtResource( 1 )
 
@@ -27,7 +27,7 @@ margin_right = 1024.0
 margin_bottom = 768.0
 color = Color( 0.0313726, 0.0470588, 0.145098, 1 )
 
-[node name="Light" type="Label" parent="."]
+[node name="Ammo" type="Label" parent="."]
 margin_left = 64.0
 margin_top = 704.0
 margin_right = 256.0
@@ -38,11 +38,20 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="Button" type="Label" parent="Light"]
+[node name="Clip" type="Label" parent="Ammo"]
 margin_top = -32.0
 margin_right = 192.0
 custom_fonts/font = SubResource( 1 )
-text = "(Q)"
+text = "test"
+align = 1
+valign = 1
+
+[node name="Button" type="Label" parent="Ammo"]
+margin_left = -32.0
+margin_top = -64.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 3 )
+text = "(R)"
 align = 1
 valign = 1
 
@@ -79,7 +88,7 @@ autowrap = true
 [node name="Button" type="Label" parent="Radar"]
 margin_left = 192.0
 margin_top = -64.0
-margin_right = 256.0
+margin_right = 224.0
 margin_bottom = 64.0
 custom_fonts/font = SubResource( 3 )
 text = "(E)"
@@ -87,7 +96,7 @@ align = 1
 valign = 1
 
 [node name="Count" type="Label" parent="Radar"]
-margin_top = -64.0
+margin_top = -32.0
 margin_right = 192.0
 custom_fonts/font = SubResource( 3 )
 text = "Radar"
