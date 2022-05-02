@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Тихий ужас.mp3-faed4e718ab63ebefe2f82dbd6455735.mp3str"
+
+[deps]
+
+source_file="res://Music/Тихий ужас.mp3"
+dest_files=[ "res://.import/Тихий ужас.mp3-faed4e718ab63ebefe2f82dbd6455735.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

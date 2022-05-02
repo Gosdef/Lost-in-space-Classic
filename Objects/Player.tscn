@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/light.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/Player/Player.png" type="Texture" id=3]
 [ext_resource path="res://Objects/Gun.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Music/Перезарядка.mp3" type="AudioStream" id=5]
 
 [sub_resource type="OccluderPolygon2D" id=2]
 polygon = PoolVector2Array( -15.9999, 16.0001, 0.00017376, 24, 16.0001, 15.9999, 23.9999, -8.00017, 16, -0.00011584, 13.0001, 8.99991, 7.0001, 13.9999, 0.00011584, 16, -6.9999, 14.0001, -12.9999, 9.00009, -16, 0.00011584, -24.0001, -7.99983 )
@@ -24,7 +25,7 @@ polygon = PoolVector2Array( 18, 4.99993, 18, -6.51598e-05, 17, -5.00006, 13, -10
 [node name="Camera2D" type="Camera2D" parent="."]
 rotation = 1.5708
 current = true
-zoom = Vector2( 0.8, 0.8 )
+zoom = Vector2( 0.7, 0.7 )
 limit_left = 0
 limit_top = 0
 __meta__ = {
@@ -99,6 +100,9 @@ wait_time = 10.0
 
 [node name="Reload" type="Timer" parent="Timers"]
 wait_time = 1.5
+
+[node name="Reload" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
 
 [connection signal="timeout" from="Timers/Tb_timer" to="." method="_on_Tb_timer_timeout"]
 [connection signal="timeout" from="Timers/Tb_time_after_use" to="." method="_on_Tb_time_after_use_timeout"]

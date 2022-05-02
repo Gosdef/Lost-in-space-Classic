@@ -54,9 +54,9 @@ var pl_radar_on = false
 var pl_radar_on_cooldown = false
 var pl_radar_count = 3
 
-var pl_bullet_global_cnt = 6
-var pl_bullet_clip_cnt = 12
-var pl_bullet_clip_max = 12
+var pl_bullet_global_cnt = 60 # changed in _ready
+var pl_bullet_clip_cnt = 12 # changed in _ready 
+var pl_bullet_clip_max = 12 # changed in _ready
 var pl_bullet_speed = 700 # pix?
 
 
@@ -86,6 +86,9 @@ func load_settings():
 	pl_radar_on = false
 	pl_radar_on_cooldown = false
 	pl_radar_count = 3
+	pl_bullet_global_cnt = 60
+	pl_bullet_clip_cnt = 12
+	pl_bullet_clip_max = 12
 	
 	var rn = RandomNumberGenerator.new()
 	rn.randomize()

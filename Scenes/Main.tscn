@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Sprites/blackboard.jpg" type="Texture" id=1]
 [ext_resource path="res://Another/ofont.ru_BureauAP.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Music/muzyka-iz-filma-uzhasov-1.mp3" type="AudioStream" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -77,7 +76,6 @@ text = "1. Передвигаться на WASD
 autowrap = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
 volume_db = -5.0
 autoplay = true
 stream_paused = true

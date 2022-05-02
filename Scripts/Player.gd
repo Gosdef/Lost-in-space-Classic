@@ -62,7 +62,8 @@ func _input(event):
 			$Timers/Tb_timer.stop()
 			$Timers/Tb_time_after_use.start()
 
-	if event.is_action_pressed('Reload') and gl.pl_bullet_global_cnt > 0 and gl.pl_bullet_clip_cnt != 12:
+	if event.is_action_pressed('Reload') and gl.pl_bullet_global_cnt > 0 and gl.pl_bullet_clip_cnt != gl.pl_bullet_clip_max:
+		$Reload.play()
 		$Timers/Reload.start()
 
 
@@ -137,3 +138,6 @@ func _on_Reload_timeout():
 	elif gl.pl_bullet_clip_cnt + gl.pl_bullet_global_cnt < gl.pl_bullet_clip_max:
 		gl.pl_bullet_clip_cnt += gl.pl_bullet_global_cnt
 		gl.pl_bullet_global_cnt = 0
+	
+	$Timers/Reload.stop()
+	$Reload.stop()

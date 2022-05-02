@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Additional objects/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Gun.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/Guns/Standart gun.png" type="Texture" id=3]
+[ext_resource path="res://Music/Выстрел.mp3" type="AudioStream" id=4]
 
 [node name="Gun" type="Node2D"]
 script = ExtResource( 2 )
@@ -13,3 +14,10 @@ position = Vector2( -30, -4 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 3 )
 centered = false
+
+[node name="Shot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

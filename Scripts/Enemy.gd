@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 
+var not_died  = true
+
 var velocity = Vector2(0, 0)
 var rotation_dir = 0
 var speed = gl.en_normal_speed
@@ -19,7 +21,7 @@ func _ready():
 	rn.randomize()
 	
 	# Start moves
-	velocity = Vector2(rn.randi_range(-1, 1) * speed, 0).rotated(rotation)
+	velocity = Vector2(rn.randi_range(-1, 1), rn.randi_range(-1, 1)).normalized() * speed
 	rotation_dir = rn.randi_range(-1, 1)
 	
 	# Vision
@@ -36,23 +38,23 @@ func _ready():
 func _physics_process(delta):
 	update()
 	
-	if gl.pl_radar_on: 
+	if gl.pl_radar_on and not_died: 
 		$Light2D.visible = true
-	else:
+	elif not_died:
 		$Light2D.visible = false
 	
-	if copy != gl.pl_light_on and gl.pl_light_on:
+	if copy != gl.pl_light_on and gl.pl_light_on and not_died:
 		copy = gl.pl_light_on
 		var shape = CircleShape2D.new()
 		shape.radius = gl.en_detection_radius_light_on_px
 		$Visibility/CollisionShape2D.shape = shape
-	elif copy != gl.pl_light_on and not gl.pl_light_on:
+	elif copy != gl.pl_light_on and not gl.pl_light_on and not_died:
 		copy = gl.pl_light_on
 		var shape = CircleShape2D.new()
 		shape.radius = gl.en_detection_radius_light_off_px
 		$Visibility/CollisionShape2D.shape = shape
 	
-	if target:
+	if target and not_died:
 		gl.zombi_hunting = true
 		if gl.pl_light_on:
 			last_velocity = (Vector2((target.position - position).normalized() * speed_run))
@@ -62,23 +64,24 @@ func _physics_process(delta):
 			move_and_slide(Vector2((target.position - position).normalized() * speed_run))
 		else:
 			watch(delta)
-	else:
+	elif not_died:
 		rotation += rotation_dir * rotation_speed * delta
 		move_and_slide(velocity)
 
 func _on_Timer_timeout():
-	if not target:
-		last_velocity = (Vector2(speed, 0).rotated(rotation))
+	if not target and not_died:
+		var vel = Vector2(rn.randi_range(-1, 1), rn.randi_range(-1, 1)).normalized() * speed
+		last_velocity = vel
 		last_rotation = rn.randi_range(-1, 1)
 		
-		velocity = Vector2(speed, 0).rotated(rotation)
+		velocity = vel
 		rotation_dir = rn.randi_range(-1, 1)
 
 func watch(delta):
 	var space_state = get_world_2d().direct_space_state
 	var result = space_state.intersect_ray(position, target.position, [self], collision_mask)
 	
-	if result:
+	if result and not_died:
 		if result.collider.name == 'Player':
 			last_velocity = (Vector2((target.position - position).normalized() * speed_run))
 			last_rotation = (target.position - position).angle()
@@ -99,24 +102,29 @@ func hit():
 	if hit_cnt == 1:
 		speed *= 0.6
 		speed_run *= 0.6
-		$Sprite.texture = load("res://Sprites/Enemy/Hit once.png")
+		$Sprite.texture = load("res://Sprites/Enemy/Zombi_1.png")
 	elif hit_cnt == 2:
 		speed *= 0.8
 		speed_run *= 0.8
-		$Sprite.texture = load("res://Sprites/Enemy/Hit twice.png")
+		$Sprite.texture = load("res://Sprites/Enemy/Zombi_2.png")
 	elif hit_cnt == 3:
 		speed *= 0.5
 		speed_run *= 0.5
-		$Sprite.texture = load("res://Sprites/Enemy/Hit three times.png")
+		$Sprite.texture = load("res://Sprites/Enemy/Zombi_3.png")
 	else:
 		speed = 0
 		speed_run = 0
-		$Sprite.texture = load("res://Sprites/Enemy/Died.png")
+		$Sprite.texture = load("res://Sprites/Enemy/Zombi_dead.png")
 		$Light2D.color = Color.red
 		$LightOccluder2D.visible = false
 		$Visibility.visible = false
+		target = null
+		$Timer.stop()
+		velocity = Vector2(0, 0)
+		rotation = last_rotation
 		$DieCircle.queue_free()
 		$AudioStreamPlayer2D.queue_free()
+		not_died = false
 
 
 func _on_Visibility_body_entered(body):
@@ -128,7 +136,7 @@ func _on_Visibility_body_entered(body):
 		target = body
 
 func _on_Visibility_body_exited(body):
-	if body == target: 
+	if body == target and not_died: 
 		#$AudioStreamPlayer2D.stop()
 		#look_at(body.position)
 		velocity = Vector2((target.position - position).normalized() * speed)

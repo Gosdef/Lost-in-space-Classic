@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Выстрел.mp3-8023183f929390fa2a26d008001711bd.mp3str"
+
+[deps]
+
+source_file="res://Music/Выстрел.mp3"
+dest_files=[ "res://.import/Выстрел.mp3-8023183f929390fa2a26d008001711bd.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
